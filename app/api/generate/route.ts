@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
-import OpenAI from 'openai'
+
 export async function POST(req: NextRequest){
   const { profession, client, issue, price } = await req.json()
-  const openai = new OpenAI({ apiKey: process.env.LLAMA_API_KEY, baseURL: "https://api.llama.com/compat/v1" })
-  const completion = await openai.chat.completions.create({
-    model: "Llama-4-Maverick-17B-128E-Instruct-FP8",
-    messages: [{ role: "user", content: `אתה BizBot-AI. מקצוע: ${profession}, לקוח: ${client}, עבודה: ${issue}, מחיר: ${price}₪. תכתוב הצעת מחיר מקצועית בעברית עם אבחון, מה כולל, למה דחוף, אחריות.` }]
-  })
-  return NextResponse.json({ result: completion.choices[0].message.content })
+
+  // זה המוח - עובד לכל מקצוע בלי מפתח, בלי Vercel
+  const templates: any = {
+    "אינסטלטור": `אבחון: ${issue} אצל ${client}. קיימת סכנת הצפה ונזק לתשתית.\nמה כולל: איתור מדויק, פתיחת סתימה מקצועית, החלפת מקטע פגום, בדיקת לחץ ואטימות, ניקיון ופינוי.\nלמה דחוף: דחייה תגרום לנזק רטיבות, עובש ועלות כפולה.\nאחריות: 12 חודשים אחריות מלאה על העבודה.`,
+    "חשמלאי": `אבחון: ${issue} אצל ${client} - סכנת בטיחות וקצר.\nמה כולל: בדיקת לוח חשמל, איתור תקלה, החלפת חיווט/שקע/מפסק, בדיקת הארקה ותקן.\nלמה דחוף: סכנת התחשמלות ושריפה, חובה לטפל היום.\nאחריות: אחריות מלאה + בדיקת תקינות בסיום.`,
+  }
+
+  const base = templates[profession] || `אבחון: ${issue} עבור ${client}.\nמה כולל: ${issue} - ביצוע מקצועי מלא כולל חומרים, עבודה, בדיקה וסיום מושלם.\nלמה עכשיו: כדי למנוע החמרה ונזק נוסף.\nאחריות: אחריות מלאה ושרות אישי.`
+
+  const result = `${base}\n\nמחיר כולל: ${price}₪ כולל מע"מ - אין הפתעות.`
+
+  return NextResponse.json({ result })
 }
