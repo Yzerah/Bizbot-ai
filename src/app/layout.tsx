@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { getSiteUrl } from "@/lib/site";
 import "./globals.css";
 
 const plex = localFont({
@@ -14,7 +15,7 @@ const plex = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://bizbot-ai.co.il"),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: "BizBot — הצעות מחיר מקצועיות לעצמאים תוך 30 שניות",
     template: "%s | BizBot",

@@ -20,6 +20,7 @@ export function SiteFooter() {
         <div className="space-y-3">
           <nav className="flex flex-wrap gap-5 text-sm text-neutral-600">
             <Link href="/pricing" className="hover:text-ink">מחירים</Link>
+            <Link href="/blog" className="hover:text-ink">בלוג</Link>
             <LegalNav className="contents" />
           </nav>
           <p className="max-w-md text-xs leading-relaxed text-neutral-400">
