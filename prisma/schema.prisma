@@ -1,0 +1,95 @@
+// BizBot data model — source of truth.
+// Production (Vercel) and any Postgres dev DB use this file directly, with the
+// migrations in prisma/migrations (PostgreSQL).
+// Local SQLite dev: scripts/prisma.mjs derives prisma/sqlite/schema.prisma from
+// this file (provider swapped) and uses prisma/sqlite/migrations. Edit models HERE only.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // pooled URL at runtime (Neon: the -pooler host)
+  directUrl = env("DIRECT_URL") // unpooled URL for migrations; scripts/prisma.mjs defaults it
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  name          String?
+  plan          String   @default("FREE") // FREE | PRO | BUSINESS
+  quotesCreated Int      @default(0) // counts every quote ever created (free-tier limit)
+
+  // Default seller details, remembered from the last quote
+  businessName  String?
+  businessPhone String?
+  businessEmail String?
+  businessTaxId String?
+  businessLogo  String? // data URL (v1). Move to blob storage later.
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions        Session[]
+  quotes          Quote[]
+  upgradeRequests UpgradeRequest[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Quote {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  number Int // per-user running number, starts at 1001
+
+  title String?
+
+  sellerName  String
+  sellerPhone String?
+  sellerEmail String?
+  sellerTaxId String?
+  sellerLogo  String? // data URL
+
+  clientName    String
+  clientDetails String?
+
+  itemsJson    String // JSON array of { description, quantity, unitPrice }
+  vatEnabled   Boolean @default(true)
+  vatRate      Float   @default(0.18)
+  validityDays Int     @default(30)
+  notes        String?
+
+  // Stored in agorot (integer) to avoid floating point errors
+  subtotalAgorot Int
+  vatAgorot      Int
+  totalAgorot    Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, number])
+  @@index([userId, createdAt])
+}
+
+model UpgradeRequest {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan      String // PRO | BUSINESS
+  status    String   @default("PENDING_PAYMENT_PROVIDER")
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
