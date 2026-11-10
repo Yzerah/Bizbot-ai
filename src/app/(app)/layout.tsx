@@ -16,6 +16,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <Logo href="/dashboard" />
             <nav className="hidden items-center gap-5 text-sm text-neutral-600 sm:flex">
               <Link href="/dashboard" className="hover:text-ink">ההצעות שלי</Link>
+              <Link href="/websites" className="hover:text-ink">אתרים</Link>
               <Link href="/quotes/new" className="hover:text-ink">הצעה חדשה</Link>
               <Link href="/upgrade" className="hover:text-ink">
                 {isPaid(user.plan) || blocksNewCheckout(user.subscriptionStatus) ? "המנוי שלי" : "שדרוג"}
@@ -35,7 +36,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </div>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-8 md:py-10">{children}</main>
+      <main id="content" className="mx-auto w-full max-w-6xl flex-1 px-5 py-8 md:py-10">{children}</main>
       <SiteFooter />
     </div>
   );

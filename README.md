@@ -4,7 +4,8 @@
 הדומיין המיועד: **bizbot-ai.co.il**
 
 ## מה יש בגרסה הזו
-- דף נחיתה ודף מחירים (חינם: 3 מסמכים · PRO: ‏119 ₪ לחודש · BUSINESS: ‏249 ₪ לחודש)
+- דף בית ושירות בניית אתרים (`/websites`): דף נחיתה 990 ₪, אתר עסקי 1,990 ₪, אתר + קידום 2,990 ₪, ואחסון ועדכונים אופציונלי 99 ₪ לחודש. טופס פניות נשמר ב-`WebsiteLead`. כל לקוח אתר מקבל PRO ל-3 חודשים
+- דף מחירים לכלי ההצעות (חינם: 3 מסמכים · PRO: ‏29 ₪ לחודש · BUSINESS: ‏59 ₪ לחודש)
 - הרשמה והתחברות אמיתיות: אימייל + סיסמה (bcrypt), עוגיית סשן httpOnly, יציאה
 - אזור אישי עם רשימת ההצעות
 - מחולל הצעות מחיר: פרטי העסק (שם, לוגו, טלפון, אימייל, עוסק/ח.פ), פרטי הלקוח, שורות (תיאור/כמות/מחיר) עם הוספה והסרה, מע״מ 18% להפעלה/כיבוי, תוקף בימים, הערות, חישוב סכומים באגורות
@@ -45,6 +46,7 @@ npm run dev                     # http://localhost:3000
 
 - נתיב SQLite יחסי לתיקייה `prisma/sqlite/`, לכן `file:../dev.db` = ‏`prisma/dev.db` (הקובץ הקיים). מי שהיה לו ‎`file:./dev.db`‎ ב-`.env` צריך לעדכן ל-‎`file:../dev.db`‎.
 - `npm run dev` ו-`npm install` מריצים `prisma generate` לספק הנכון, כך שמעבר בין SQLite ל-Postgres = שינוי `DATABASE_URL` בלבד.
+- מיגרציית `WebsiteLead` נמצאת ב-`prisma/migrations/20261110180000_website_leads` (Postgres) וב-`prisma/sqlite/migrations/20261110180000_website_leads` (SQLite). `npm run db:deploy` מחיל אותה. ב-Vercel זה קורה בתוך `npm run build`.
 - **שינוי מודל:** עורכים רק את `prisma/schema.prisma`, ואז יוצרים מיגרציה לשני הספקים:
   `DATABASE_URL="postgresql://..." npm run db:migrate -- --name <שם>` (מול Postgres מקומי או ענף Neon לפיתוח — לא מול פרודקשן),
   ו-`npm run db:migrate -- --name <שם>` עם ה-SQLite המקומי.
@@ -69,8 +71,10 @@ npm run build && npm run start
 | `NEXT_PUBLIC_APP_URL` | כן בפרודקשן | `https://bizbot-ai.co.il` (משמש ל-metadataBase; ברירת המחדל בקוד זהה) |
 | `NEXT_PUBLIC_PADDLE_ENV` | לא | `sandbox` או `production`. בלי כל משתני Paddle הציבוריים, כפתורי השדרוג נשארים «בקרוב» |
 | `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN` | לא | טוקן צד-לקוח של Paddle (`test_...` / `live_...`). מיועד להיות פומבי |
-| `NEXT_PUBLIC_PADDLE_PRICE_PRO` | לא | מזהה מחיר חודשי `pri_...` למסלול PRO, ‏119 ₪ |
-| `NEXT_PUBLIC_PADDLE_PRICE_BUSINESS` | לא | מזהה מחיר חודשי `pri_...` למסלול BUSINESS, ‏249 ₪ |
+| `NEXT_PUBLIC_PADDLE_PRICE_PRO` | לא | מזהה מחיר חודשי `pri_...` למסלול PRO, ‏29 ₪ |
+| `NEXT_PUBLIC_PADDLE_PRICE_BUSINESS` | לא | מזהה מחיר חודשי `pri_...` למסלול BUSINESS, ‏59 ₪ |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | לא | מספר וואטסאפ בספרות, עם קידומת מדינה. בלי הערך כפתור הוואטסאפ מוסתר |
+| `ADMIN_EMAILS` | לא | אימיילים מופרדים בפסיק שיכולים לראות את `/admin/leads`. חייב להיות משתמש מחובר |
 | `PADDLE_API_KEY` | לא | מפתח API של השרת. לא לחשוף בדפדפן. נדרש לפורטל הלקוחות ולביטול |
 | `PADDLE_WEBHOOK_SECRET` | לא | מפתח החתימה של יעד ההתראות. בלי המפתח ה-webhook מחזיר 503 ולא מעדכן מסלול |
 
@@ -99,14 +103,16 @@ SQLite לא מתאים ל-Vercel (מערכת הקבצים זמנית), ולכן 
 
 ## מבנה הפרויקט
 ```
-src/app/(marketing)     דף נחיתה, מחירים, תנאי שימוש, פרטיות, החזרים, יצירת קשר
+src/app/(marketing)     דף הבית, בניית אתרים, מחירים, תנאי שימוש, פרטיות, החזרים, יצירת קשר
+src/app/(examples)      שלושה אתרי דוגמה בדיוניים תחת /websites/examples
+src/app/admin/leads     רשימת פניות אתר, רק לאימיילים שב-ADMIN_EMAILS
 src/app/(auth)          הרשמה, התחברות
 src/app/(app)           אזור אישי, הצעות (חדשה/צפייה/עריכה), שדרוג — מוגן בהתחברות
 src/app/api/quotes/[id]/pdf   יצירת ה-PDF בצד השרת
 src/app/api/paddle/webhook    אימות חתימת Paddle ועדכון המנוי
 src/app/actions         Server Actions: הרשמה/התחברות, שמירת הצעה, בקשת שדרוג, פורטל וביטול
 src/lib                 auth (סשנים), db, חישובי הצעה, פורמט ₪ ותאריכים, מסמך ה-PDF
-prisma/schema.prisma    User, Session, Quote, UpgradeRequest (PostgreSQL — מקור האמת)
+prisma/schema.prisma    User, Session, Quote, UpgradeRequest, WebsiteLead (PostgreSQL — מקור האמת)
 prisma/migrations       מיגרציות PostgreSQL (פרודקשן)
 prisma/sqlite           מיגרציות SQLite לפיתוח מקומי (+ סכמה נגזרת, לא ב-git)
 scripts/prisma.mjs      בחירת סכמה לפי DATABASE_URL, migrate/generate
@@ -116,7 +122,7 @@ screenshots/            צילומי מסך ודוגמת PDF
 
 ## מה הלאה
 1. וידוא חידוש אוטומטי של הדומיין bizbot-ai.co.il אצל הרשם.
-2. **הפעלת הסליקה ב-Paddle**: ליצור שני מחירים חודשיים ב-ILS (PRO ‏119, BUSINESS ‏249), להגדיר את משתני הסביבה, ולחבר את ה-webhook `https://bizbot-ai.co.il/api/paddle/webhook` לאירועי המנוי שמפורטים בסעיף הפריסה. בלי המשתנים האתר נשאר במצב «בקרוב».
+2. **הפעלת הסליקה ב-Paddle**: ליצור שני מחירים חודשיים ב-ILS (PRO ‏29, BUSINESS ‏59), להגדיר את משתני הסביבה, ולחבר את ה-webhook `https://bizbot-ai.co.il/api/paddle/webhook` לאירועי המנוי שמפורטים בסעיף הפריסה. בלי המשתנים האתר נשאר במצב «בקרוב». מזהי המחיר (`pri_...`) מוחלפים ב-Paddle; הקוד לא קובע את הסכום שנגבה.
 3. **התחברות עם Google** (Auth.js או OAuth ישיר) לצד אימייל וסיסמה.
 4. איפוס סיסמה ואימות אימייל.
 5. העברת לוגואים לאחסון קבצים (Vercel Blob / S3) במקום שמירה במסד.

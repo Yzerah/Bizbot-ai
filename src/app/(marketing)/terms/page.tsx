@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { PLANS } from "@/lib/plans";
+import { WEBSITE_HOSTING, WEBSITE_PACKAGES, WEBSITE_PRO_BONUS_MONTHS, formatShekel } from "@/lib/website-packages";
 import { PADDLE_MOR_EN, SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 
 export const metadata: Metadata = { title: "תנאי שימוש" };
@@ -70,10 +71,39 @@ export default function TermsPage() {
       </section>
 
       <section>
+        <h2>בניית אתרים</h2>
+        <p className="mt-2">
+          בנוסף לכלי ההצעות, BizBot בונה דף נחיתה או אתר לעסק קטן. זה שירות נפרד ממנוי ההצעות, וההזמנה אינה עוברת דרך
+          Paddle. התשלום נקבע לפני תחילת העבודה. המחירים בשקלים:
+        </p>
+        <ul className="mt-3">
+          {WEBSITE_PACKAGES.map((pkg) => (
+            <li key={pkg.id}>
+              <strong className="text-ink">{pkg.name}</strong>
+              {": "}
+              <span className="num">{formatShekel(pkg.price)}</span>
+              {", "}
+              {pkg.unit}. {pkg.summary}
+            </li>
+          ))}
+          <li>
+            <strong className="text-ink">{WEBSITE_HOSTING.name}</strong>
+            {": "}
+            <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}. {WEBSITE_HOSTING.summary}
+          </li>
+        </ul>
+        <p className="mt-3">
+          כל לקוח שסוגר בניית אתר מקבל את מסלול PRO של כלי ההצעות בחינם ל-{WEBSITE_PRO_BONUS_MONTHS} חודשים. מסירה תוך
+          48 שעות נספרת מרגע שיש תוכן בסיסי ואישור לחבילה. פירוט בעמוד האתרים.
+        </p>
+      </section>
+
+      <section>
         <h2>תשלום ו-Paddle</h2>
         <p className="mt-2">
-          תהליך ההזמנה מתבצע באמצעות המשווקת המקוונת שלנו, Paddle.com. Paddle.com היא Merchant of Record (המוכרת הרשומה)
-          של כל ההזמנות. Paddle מספקת את פניות שירות הלקוחות הקשורות להזמנה ומטפלת בהחזרים.
+          תהליך ההזמנה של מנוי ההצעות מתבצע באמצעות המשווקת המקוונת שלנו, Paddle.com. Paddle.com היא Merchant of Record
+          (המוכרת הרשומה) של הזמנות המנוי. Paddle מספקת את פניות שירות הלקוחות הקשורות להזמנה ומטפלת בהחזרים. בניית אתר
+          אינה הזמנה ב-Paddle.
         </p>
         <p lang="en" dir="ltr" className="mt-2 text-left text-sm text-neutral-600">
           {PADDLE_MOR_EN}

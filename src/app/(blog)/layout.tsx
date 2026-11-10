@@ -8,7 +8,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
     <>
       {/* No session lookup here: cookies() would opt the blog out of static generation. */}
       <SiteHeaderView loggedIn={false} />
-      <main lang="he" dir="rtl" className="flex-1">
+      <main id="content" lang="he" dir="rtl" className="flex-1">
         {children}
       </main>
       <SiteFooter />

@@ -104,3 +104,20 @@ model UpgradeRequest {
 
   @@index([userId])
 }
+
+// Inquiry from the /websites lead form. Not tied to a user account.
+model WebsiteLead {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String
+  businessType String
+  packageId    String
+  hosting      Boolean  @default(false)
+  message      String?
+  ipHash       String? // salted hash of the client IP, for rate limiting only
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([ipHash, createdAt])
+  @@index([phone, createdAt])
+}

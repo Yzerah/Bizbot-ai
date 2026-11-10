@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { PLANS } from "@/lib/plans";
 import "./globals.css";
+
+const pro = PLANS.find((plan) => plan.id === "PRO");
 
 const plex = localFont({
   variable: "--font-plex",
@@ -16,17 +19,29 @@ const plex = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://bizbot-ai.co.il"),
   title: {
-    default: "BizBot — הצעות מחיר מקצועיות לעצמאים תוך 30 שניות",
+    default: "BizBot — אתר לעסק תוך 48 שעות, והצעות מחיר לעצמאים",
     template: "%s | BizBot",
   },
-  description:
-    "BizBot מייצר הצעות מחיר מקצועיות בעברית, עם הלוגו שלך, חישוב מע״מ אוטומטי והורדה כ-PDF. 3 הצעות ראשונות בחינם.",
+  description: `BizBot בונה אתר או דף נחיתה לעסק קטן בישראל תוך 48 שעות, וגם מפיק הצעות מחיר בעברית כ-PDF. 3 הצעות ראשונות בחינם, ואחר כך PRO ב-${pro?.price ?? 29} ₪ לחודש.`,
+  openGraph: {
+    siteName: "BizBot",
+    locale: "he_IL",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl" className={`${plex.variable} h-full`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <a
+          href="#content"
+          className="skip-link"
+        >
+          דילוג לתוכן
+        </a>
+        {children}
+      </body>
     </html>
   );
 }
