@@ -69,8 +69,9 @@ export default function RefundPage() {
       <section>
         <h2>מי מעבדת את ההזמנה</h2>
         <p className="mt-2">
-          {SELLER_NAME} מפעיל את {SELLER_BRAND}. תהליך ההזמנה מתבצע באמצעות המשווקת המקוונת Paddle.com, שהיא Merchant of
-          Record של כל ההזמנות ומטפלת בהחזרים.
+          {SELLER_NAME} מפעיל את {SELLER_BRAND}. תהליך ההזמנה של מנוי ההצעות מתבצע באמצעות המשווקת המקוונת Paddle.com,
+          שהיא Merchant of Record של הזמנות המנוי ומטפלת בהחזרים שלהן. בניית אתר אינה הזמנה ב-Paddle, וחלון 14 הימים
+          כאן לא חל עליה אוטומטית. תנאי ההזמנה של האתר נקבעים לפני תחילת העבודה.
         </p>
         <p lang="en" dir="ltr" className="mt-2 text-left text-sm text-neutral-600">
           {PADDLE_MOR_EN}

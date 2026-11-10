@@ -9,7 +9,7 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <Logo />
-          <p className="text-sm text-neutral-500">הצעות מחיר מקצועיות לעצמאים ולעסקים קטנים בישראל.</p>
+          <p className="text-sm text-neutral-500">אתרים לעסקים קטנים בישראל, והצעות מחיר לעצמאים.</p>
           <p className="text-sm text-neutral-500">
             {SELLER_NAME} ·{" "}
             <a dir="ltr" className="hover:text-ink" href={`mailto:${SELLER_EMAIL}`}>
@@ -19,6 +19,7 @@ export function SiteFooter() {
         </div>
         <div className="space-y-3">
           <nav className="flex flex-wrap gap-5 text-sm text-neutral-600">
+            <Link href="/websites" className="hover:text-ink">אתרים</Link>
             <Link href="/blog" className="hover:text-ink">בלוג</Link>
             <Link href="/pricing" className="hover:text-ink">מחירים</Link>
             <LegalNav className="contents" />

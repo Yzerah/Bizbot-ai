@@ -25,7 +25,7 @@ export const PLANS: {
   {
     id: "PRO",
     name: "PRO",
-    price: 119,
+    price: 29,
     tagline: "לעצמאים שמוציאים הצעות כל שבוע",
     features: [
       "הצעות מחיר ללא הגבלה",
@@ -39,7 +39,7 @@ export const PLANS: {
   {
     id: "BUSINESS",
     name: "BUSINESS",
-    price: 249,
+    price: 59,
     tagline: "לעסקים עם צוות",
     features: [
       "כל מה שב-PRO",
@@ -53,4 +53,34 @@ export const PLANS: {
 
 export function isPaid(plan: string) {
   return plan === "PRO" || plan === "BUSINESS";
+}
+
+export function quoteOffersJsonLd(origin: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "מסלולי BizBot להצעות מחיר",
+    itemListElement: PLANS.map((plan, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Offer",
+        name: `BizBot ${plan.name}`,
+        description: plan.tagline,
+        price: String(plan.price),
+        priceCurrency: "ILS",
+        url: `${origin}/pricing`,
+        ...(plan.price > 0
+          ? {
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: String(plan.price),
+                priceCurrency: "ILS",
+                unitText: "MONTH",
+              },
+            }
+          : {}),
+      },
+    })),
+  };
 }

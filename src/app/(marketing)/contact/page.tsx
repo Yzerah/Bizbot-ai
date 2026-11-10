@@ -23,6 +23,9 @@ export default function ContactPage() {
       <h2 className="mt-10 text-xl font-semibold text-ink">במה אפשר לעזור</h2>
       <ul className="mt-3 list-disc space-y-1.5 pr-5">
         <li>שימוש ב-BizBot, הצעות מחיר וחשבון</li>
+        <li>
+          בניית אתר לעסק. אפשר גם להשאיר פרטים ב<Link href="/websites#lead" className="text-royal-600 hover:underline">עמוד האתרים</Link>
+        </li>
         <li>מנוי, ביטול וחשבונית. חיוב והחזר כספי מעובדים על ידי Paddle.com</li>
         <li>בקשת עיון, תיקון או מחיקה של מידע אישי</li>
       </ul>

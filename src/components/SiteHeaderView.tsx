@@ -7,10 +7,16 @@ export function SiteHeaderView({ loggedIn }: { loggedIn: boolean }) {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <div className="flex items-center gap-4 sm:gap-8">
           <Logo />
+          <Link href="/websites" className="text-sm text-neutral-600 hover:text-ink sm:hidden">
+            אתרים
+          </Link>
           <Link href="/blog" className="text-sm text-neutral-600 hover:text-ink sm:hidden">
             בלוג
           </Link>
           <nav aria-label="ניווט ראשי" className="hidden items-center gap-6 text-sm text-neutral-600 sm:flex">
+            <Link href="/websites" className="hover:text-ink">
+              אתרים
+            </Link>
             <Link href="/#how" className="hover:text-ink">
               איך זה עובד
             </Link>

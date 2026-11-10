@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/JsonLd";
 import { LegalNav } from "@/components/LegalNav";
 import { MerchantOfRecordNotice } from "@/components/MerchantOfRecordNotice";
 import { PricingCards } from "@/components/PricingCards";
-import { PLANS } from "@/lib/plans";
+import { PLANS, quoteOffersJsonLd } from "@/lib/plans";
 import { SELLER_EMAIL } from "@/lib/seller";
 
 export const metadata: Metadata = { title: "מחירים" };
 
 export default function PricingPage() {
+  const origin = (process.env.NEXT_PUBLIC_APP_URL || "https://bizbot-ai.co.il").replace(/\/$/, "");
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
+      <JsonLd data={quoteOffersJsonLd(origin)} />
       <div className="mx-auto mb-12 max-w-2xl text-center">
         <h1 className="text-4xl font-bold tracking-tight">מחירים פשוטים ושקופים</h1>
         <p className="mt-4 text-lg text-neutral-600">
