@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
+import { faqJsonLd } from "@/lib/seo";
 import { WebsiteLeadForm } from "@/components/WebsiteLeadForm";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import {
@@ -30,11 +31,13 @@ export const metadata: Metadata = {
     locale: "he_IL",
     type: "website",
     siteName: "BizBot",
+    images: [{ url: "/og/websites.png", width: 1200, height: 630, alt: "אתר לעסק תוך 48 שעות" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "אתר לעסק תוך 48 שעות",
     description,
+    images: ["/og/websites.png"],
   },
 };
 
@@ -77,6 +80,7 @@ export default async function WebsitesPage({
   return (
     <>
       <JsonLd data={websiteOffersJsonLd(origin)} />
+      <JsonLd data={faqJsonLd(faq)} />
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_80%_0%,#dfe6ff_0%,transparent_70%)]" />
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 pb-20 pt-16 md:grid-cols-[1.05fr_.95fr] md:pt-24">

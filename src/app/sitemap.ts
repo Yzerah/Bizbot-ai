@@ -12,6 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/terms`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE_URL}/refund`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${SITE_URL}/websites/examples/renovation`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${SITE_URL}/websites/examples/clinic`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${SITE_URL}/websites/examples/cafe`, changeFrequency: "monthly", priority: 0.4 },
   ];
 
   const articles: MetadataRoute.Sitemap = posts.map((post) => ({

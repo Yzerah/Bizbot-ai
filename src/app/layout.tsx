@@ -33,7 +33,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl" className={`${plex.variable} h-full`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <a
+          href="#content"
+          className="skip-link"
+        >
+          דילוג לתוכן
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

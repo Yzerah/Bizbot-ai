@@ -7,7 +7,24 @@ import { PricingCards } from "@/components/PricingCards";
 import { PLANS, quoteOffersJsonLd } from "@/lib/plans";
 import { SELLER_EMAIL } from "@/lib/seller";
 
-export const metadata: Metadata = { title: "מחירים" };
+const pro = PLANS.find((plan) => plan.id === "PRO")!;
+const business = PLANS.find((plan) => plan.id === "BUSINESS")!;
+const pricingDescription = `מסלול חינם עם 3 הצעות. PRO ב-${pro.price} ₪ לחודש, BUSINESS ב-${business.price} ₪ לחודש. מנוי חודשי, אפשר לבטל בכל עת.`;
+
+export const metadata: Metadata = {
+  title: "מחירים",
+  description: pricingDescription,
+  alternates: { canonical: "/pricing" },
+  openGraph: {
+    title: "מחירי הצעות המחיר",
+    description: pricingDescription,
+    url: "/pricing",
+    locale: "he_IL",
+    siteName: "BizBot",
+    images: [{ url: "/og/pricing.png", width: 1200, height: 630, alt: `PRO ${pro.price} ₪, BUSINESS ${business.price} ₪` }],
+  },
+  twitter: { card: "summary_large_image", title: "מחירי הצעות המחיר", description: pricingDescription, images: ["/og/pricing.png"] },
+};
 
 export default function PricingPage() {
   const origin = (process.env.NEXT_PUBLIC_APP_URL || "https://bizbot-ai.co.il").replace(/\/$/, "");

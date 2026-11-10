@@ -23,8 +23,9 @@ export function blogIndexMetadata(): Metadata {
       siteName: SITE_NAME,
       locale: "he_IL",
       type: "website",
+      images: [{ url: "/og/blog.png", width: 1200, height: 630, alt: BLOG_TITLE }],
     },
-    twitter: { card: "summary", title: BLOG_TITLE, description: BLOG_DESCRIPTION },
+    twitter: { card: "summary_large_image", title: BLOG_TITLE, description: BLOG_DESCRIPTION, images: ["/og/blog.png"] },
   };
 }
 
@@ -47,8 +48,9 @@ export function articleMetadata(post: BlogPost): Metadata {
       publishedTime,
       modifiedTime,
       authors: [SITE_NAME],
+      images: [{ url: "/og/blog.png", width: 1200, height: 630, alt: post.title }],
     },
-    twitter: { card: "summary", title: post.title, description: post.description },
+    twitter: { card: "summary_large_image", title: post.title, description: post.description, images: ["/og/blog.png"] },
   };
 }
 
