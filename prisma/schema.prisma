@@ -19,8 +19,17 @@ model User {
   email         String   @unique
   passwordHash  String
   name          String?
-  plan          String   @default("FREE") // FREE | PRO | BUSINESS
+  plan          String   @default("FREE") // FREE | PRO | BUSINESS — set from the Paddle subscription, not from the client
   quotesCreated Int      @default(0) // counts every quote ever created (free-tier limit)
+
+  // Paddle Billing. Null until a verified webhook maps a subscription to this user.
+  paddleCustomerId      String?
+  paddleSubscriptionId  String?   @unique
+  subscriptionStatus    String? // active | trialing | past_due | paused | canceled
+  subscriptionPriceId   String?
+  subscriptionPeriodEnd DateTime?
+  subscriptionCancelAt  DateTime? // set when Paddle schedules cancellation at period end
+  paddleLastEventAt     DateTime? // ignores older webhook deliveries for the same user
 
   // Default seller details, remembered from the last quote
   businessName  String?
@@ -35,6 +44,8 @@ model User {
   sessions        Session[]
   quotes          Quote[]
   upgradeRequests UpgradeRequest[]
+
+  @@index([paddleCustomerId])
 }
 
 model Session {

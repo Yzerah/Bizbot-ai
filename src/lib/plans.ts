@@ -9,7 +9,6 @@ export const PLANS: {
   tagline: string;
   features: string[];
   highlighted?: boolean;
-  soon?: boolean;
 }[] = [
   {
     id: "FREE",
@@ -49,7 +48,6 @@ export const PLANS: {
       "תמיכה מועדפת",
       "ביטול בכל עת",
     ],
-    soon: true,
   },
 ];
 

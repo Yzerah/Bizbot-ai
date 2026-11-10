@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { PaddleCheckoutButton } from "@/components/PaddleCheckoutButton";
+import { getCurrentUser } from "@/lib/auth";
+import { blocksNewCheckout, getPaddleCheckoutConfig } from "@/lib/paddle";
 import { PLANS } from "@/lib/plans";
 
 function Check() {
@@ -9,47 +12,88 @@ function Check() {
   );
 }
 
-export function PricingCards({ loggedIn = false }: { loggedIn?: boolean }) {
+export async function PricingCards() {
+  const user = await getCurrentUser();
+  const paddle = getPaddleCheckoutConfig();
+  const manageInstead = blocksNewCheckout(user?.subscriptionStatus);
+
   return (
     <div className="grid gap-5 md:grid-cols-3">
-      {PLANS.map((p) => {
-        const href =
-          p.id === "FREE" ? (loggedIn ? "/quotes/new" : "/signup") : loggedIn ? `/upgrade?plan=${p.id}` : `/signup?next=${encodeURIComponent(`/upgrade?plan=${p.id}`)}`;
-        const cta = p.id === "FREE" ? "צור מסמך ראשון בחינם" : `בחירה ב-${p.name}`;
+      {PLANS.map((plan) => {
+        const highlighted = plan.highlighted;
+        const buttonClass = highlighted ? "btn bg-white text-ink hover:bg-neutral-100" : plan.id === "FREE" ? "btn-primary" : "btn-ghost";
+        const signupHref = `/signup?next=${encodeURIComponent(`/upgrade?plan=${plan.id}`)}`;
+        const priceId = plan.id === "BUSINESS" ? paddle.priceBusiness : paddle.pricePro;
+        let action: React.ReactNode;
+        if (plan.id === "FREE") {
+          action = (
+            <Link href={user ? "/quotes/new" : "/signup"} className={`mt-8 ${buttonClass}`}>
+              צור מסמך ראשון בחינם
+            </Link>
+          );
+        } else if (!paddle.enabled) {
+          action = (
+            <button type="button" className={`mt-8 ${buttonClass}`} disabled>
+              בקרוב
+            </button>
+          );
+        } else if (!user) {
+          action = (
+            <Link href={signupHref} className={`mt-8 ${buttonClass}`}>
+              שדרוג ל-{plan.name}
+            </Link>
+          );
+        } else if (manageInstead) {
+          action = (
+            <Link href="/upgrade" className={`mt-8 ${buttonClass}`}>
+              ניהול המנוי
+            </Link>
+          );
+        } else {
+          action = (
+            <div className="mt-8">
+              <PaddleCheckoutButton
+                label={`שדרוג ל-${plan.name}`}
+                className={`${buttonClass} w-full`}
+                environment={paddle.environment}
+                clientToken={paddle.clientToken}
+                priceId={priceId}
+                userId={user.id}
+                email={user.email}
+              />
+            </div>
+          );
+        }
+
         return (
           <div
-            key={p.id}
+            key={plan.id}
             className={`relative flex flex-col rounded-2xl border p-7 ${
-              p.highlighted ? "border-ink bg-ink text-white shadow-2xl" : "border-neutral-200 bg-white"
+              highlighted ? "border-ink bg-ink text-white shadow-2xl" : "border-neutral-200 bg-white"
             }`}
           >
-            {p.highlighted && (
+            {highlighted && (
               <span className="absolute -top-3 right-7 rounded-full bg-royal-600 px-3 py-1 text-xs font-semibold text-white">
                 הכי משתלם
               </span>
             )}
-            <div className="text-sm font-semibold tracking-wide">{p.name}</div>
-            <div className={`mt-1 text-sm ${p.highlighted ? "text-neutral-300" : "text-neutral-500"}`}>{p.tagline}</div>
+            <div className="text-sm font-semibold tracking-wide">{plan.name}</div>
+            <div className={`mt-1 text-sm ${highlighted ? "text-neutral-300" : "text-neutral-500"}`}>{plan.tagline}</div>
             <div className="mt-6 flex items-baseline gap-1.5">
-              <span className="text-4xl font-bold num">₪{p.price}</span>
-              <span className={`text-sm ${p.highlighted ? "text-neutral-400" : "text-neutral-500"}`}>
-                {p.price === 0 ? "לתמיד" : "לחודש"}
+              <span className="text-4xl font-bold num">₪{plan.price}</span>
+              <span className={`text-sm ${highlighted ? "text-neutral-400" : "text-neutral-500"}`}>
+                {plan.price === 0 ? "לתמיד" : "לחודש, בשקלים"}
               </span>
             </div>
             <ul className="mt-6 flex-1 space-y-3 text-sm">
-              {p.features.map((f) => (
-                <li key={f} className="flex gap-2.5">
+              {plan.features.map((feature) => (
+                <li key={feature} className="flex gap-2.5">
                   <Check />
-                  <span className={p.highlighted ? "text-neutral-200" : "text-neutral-700"}>{f}</span>
+                  <span className={highlighted ? "text-neutral-200" : "text-neutral-700"}>{feature}</span>
                 </li>
               ))}
             </ul>
-            <Link
-              href={href}
-              className={`mt-8 ${p.highlighted ? "btn bg-white text-ink hover:bg-neutral-100" : p.id === "FREE" ? "btn-primary" : "btn-ghost"}`}
-            >
-              {cta}
-            </Link>
+            {action}
           </div>
         );
       })}

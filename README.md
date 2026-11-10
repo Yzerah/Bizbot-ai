@@ -12,7 +12,10 @@
 - שמירה במסד נתונים, עריכה והורדה חוזרת, מחיקה
 - פרטי העסק נזכרים אוטומטית להצעה הבאה
 - מגבלת מסלול חינם: אחרי 3 הצעות נחסמת יצירת הצעות חדשות ומוצג דף שדרוג ל-PRO
-- דף שדרוג/תשלום: **לא מבצע חיוב ולא מסמן תשלום כהצלחה**. הוא שומר בקשת שדרוג (טבלת `UpgradeRequest`) ומסביר שהסליקה תחובר בשלב הבא
+- שדרוג בתשלום דרך Paddle Billing (Merchant of Record): כפתורי PRO ו-BUSINESS פותחים את קופת ה-overlay של Paddle.js עם מזהה המשתמש והאימייל ב-`customData`. בלי משתני Paddle הכפתורים מוצגים כ«בקרוב» ולא מתבצע חיוב
+- Webhook חתום ב-`/api/paddle/webhook` שמעדכן על המשתמש מזהה מנוי, מזהה לקוח, סטטוס, מסלול וסוף תקופת החיוב. מסלול החינם נשאר 3 מסמכים; PRO ו-BUSINESS לפי הלוגיקה הקיימת
+- ניהול וביטול מנוי למנויים: פורטל הלקוחות של Paddle, וגם ביטול לסוף התקופה דרך ה-API
+- עמודי תנאי שימוש (`/terms`), פרטיות (`/privacy`), החזרים (`/refund`) ויצירת קשר (`/contact`)
 
 > BizBot מפיק **הצעות מחיר בלבד** — לא חשבוניות מס, קבלות או חוזים.
 
@@ -64,8 +67,12 @@ npm run build && npm run start
 | `DIRECT_URL` | לא | חיבור ישיר (ללא pooler) למיגרציות. ברירת מחדל: `DATABASE_URL_UNPOOLED` → `POSTGRES_URL_NON_POOLING` → `DATABASE_URL` |
 | `AUTH_SECRET` | כן | סוד לחתימת טוקני הסשן (לפחות 16 תווים). `openssl rand -base64 32` |
 | `NEXT_PUBLIC_APP_URL` | כן בפרודקשן | `https://bizbot-ai.co.il` (משמש ל-metadataBase; ברירת המחדל בקוד זהה) |
-| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_PRO`, `STRIPE_PRICE_BUSINESS` | בהמשך | שמורים לחיבור Stripe |
-| `GROW_PAGE_CODE`, `GROW_USER_ID`, `GROW_API_KEY` | בהמשך | שמורים לחיבור Grow (משולם) |
+| `NEXT_PUBLIC_PADDLE_ENV` | לא | `sandbox` או `production`. בלי כל משתני Paddle הציבוריים, כפתורי השדרוג נשארים «בקרוב» |
+| `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN` | לא | טוקן צד-לקוח של Paddle (`test_...` / `live_...`). מיועד להיות פומבי |
+| `NEXT_PUBLIC_PADDLE_PRICE_PRO` | לא | מזהה מחיר חודשי `pri_...` למסלול PRO, ‏119 ₪ |
+| `NEXT_PUBLIC_PADDLE_PRICE_BUSINESS` | לא | מזהה מחיר חודשי `pri_...` למסלול BUSINESS, ‏249 ₪ |
+| `PADDLE_API_KEY` | לא | מפתח API של השרת. לא לחשוף בדפדפן. נדרש לפורטל הלקוחות ולביטול |
+| `PADDLE_WEBHOOK_SECRET` | לא | מפתח החתימה של יעד ההתראות. בלי המפתח ה-webhook מחזיר 503 ולא מעדכן מסלול |
 
 ## פריסה ל-Vercel
 SQLite לא מתאים ל-Vercel (מערכת הקבצים זמנית), ולכן בפרודקשן משתמשים ב-PostgreSQL (Neon). הקוד כבר מוכן — אין צורך לשנות provider.
@@ -81,17 +88,23 @@ SQLite לא מתאים ל-Vercel (מערכת הקבצים זמנית), ולכן 
 1. `DATABASE_URL` — Postgres pooled (אינטגרציית Neon מגדירה אותו אוטומטית, יחד עם `DATABASE_URL_UNPOOLED`).
 2. `AUTH_SECRET` — `openssl rand -base64 32` (חובה; בלעדיו ההתחברות לא תעבוד).
 3. `NEXT_PUBLIC_APP_URL=https://bizbot-ai.co.il`.
+4. כשמוכנים לסליקה, גם את משתני Paddle מהטבלה למעלה (Production ו-Preview). אחרי שמירה צריך פריסה מחדש. ב-Paddle → Notifications יוצרים יעד כתובת:
+
+   `https://bizbot-ai.co.il/api/paddle/webhook`
+
+   ומסמנים את האירועים: `subscription.created`, `subscription.updated`, `subscription.activated`, `subscription.canceled`, `subscription.past_due`, `subscription.paused`, `subscription.resumed`, `subscription.trialing`.
 
 גופני ה-PDF נכללים אוטומטית בפונקציה (`outputFileTracingIncludes` ב-`next.config.ts`).
 `.vercelignore` מונע העלאה של `node_modules`,‏ `.next`,‏ `.env`,‏ `*.db`,‏ `prisma/sqlite` ו-`screenshots` בפריסה דרך ה-CLI.
 
 ## מבנה הפרויקט
 ```
-src/app/(marketing)     דף נחיתה, מחירים, תנאי שימוש
+src/app/(marketing)     דף נחיתה, מחירים, תנאי שימוש, פרטיות, החזרים, יצירת קשר
 src/app/(auth)          הרשמה, התחברות
 src/app/(app)           אזור אישי, הצעות (חדשה/צפייה/עריכה), שדרוג — מוגן בהתחברות
 src/app/api/quotes/[id]/pdf   יצירת ה-PDF בצד השרת
-src/app/actions         Server Actions: הרשמה/התחברות, שמירת הצעה, בקשת שדרוג
+src/app/api/paddle/webhook    אימות חתימת Paddle ועדכון המנוי
+src/app/actions         Server Actions: הרשמה/התחברות, שמירת הצעה, בקשת שדרוג, פורטל וביטול
 src/lib                 auth (סשנים), db, חישובי הצעה, פורמט ₪ ותאריכים, מסמך ה-PDF
 prisma/schema.prisma    User, Session, Quote, UpgradeRequest (PostgreSQL — מקור האמת)
 prisma/migrations       מיגרציות PostgreSQL (פרודקשן)
@@ -103,7 +116,7 @@ screenshots/            צילומי מסך ודוגמת PDF
 
 ## מה הלאה
 1. וידוא חידוש אוטומטי של הדומיין bizbot-ai.co.il אצל הרשם.
-2. **סליקה — Stripe או Grow**: יצירת Checkout למסלול PRO (119 ₪/חודש), webhook שמעדכן `User.plan` ל-PRO רק אחרי תשלום מאושר, דף ניהול מנוי וביטול. נקודת החיבור: `src/app/actions/upgrade.ts`.
+2. **הפעלת הסליקה ב-Paddle**: ליצור שני מחירים חודשיים ב-ILS (PRO ‏119, BUSINESS ‏249), להגדיר את משתני הסביבה, ולחבר את ה-webhook `https://bizbot-ai.co.il/api/paddle/webhook` לאירועי המנוי שמפורטים בסעיף הפריסה. בלי המשתנים האתר נשאר במצב «בקרוב».
 3. **התחברות עם Google** (Auth.js או OAuth ישיר) לצד אימייל וסיסמה.
 4. איפוס סיסמה ואימות אימייל.
 5. העברת לוגואים לאחסון קבצים (Vercel Blob / S3) במקום שמירה במסד.
