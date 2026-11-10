@@ -12,7 +12,8 @@
     "db:generate": "node scripts/prisma.mjs generate",
     "db:migrate": "node scripts/prisma.mjs dev-migrate",
     "db:deploy": "node scripts/prisma.mjs migrate",
-    "db:seed": "node prisma/seed.mjs"
+    "db:seed": "node prisma/seed.mjs",
+    "test": "node --experimental-strip-types --test src/lib/paddle.test.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

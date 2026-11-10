@@ -59,7 +59,7 @@ export function AuthForm({ mode, next }: { mode: "login" | "signup"; next?: stri
       </p>
       {isSignup && (
         <p className="mt-4 text-center text-xs text-neutral-400">
-          בהרשמה את/ה מסכים/ה ל<Link href="/terms" className="underline">תנאי השימוש</Link>.
+          בהרשמה את/ה מסכים/ה ל<Link href="/terms" className="underline">תנאי השימוש</Link> ול<Link href="/privacy" className="underline">מדיניות הפרטיות</Link>.
         </p>
       )}
     </div>

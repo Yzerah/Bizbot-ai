@@ -30,6 +30,21 @@ export default async function Dashboard() {
         </Link>
       </div>
 
+      {paid && (
+        <div className="card flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="text-sm">
+            <div className="font-medium">מסלול {user.plan} פעיל</div>
+            {user.subscriptionPeriodEnd && (
+              <p className="mt-1 text-neutral-500">התקופה הנוכחית עד <span className="num">{formatDate(user.subscriptionPeriodEnd)}</span></p>
+            )}
+            {user.subscriptionCancelAt && (
+              <p className="mt-1 text-neutral-500">המנוי יבוטל ב-<span className="num">{formatDate(user.subscriptionCancelAt)}</span></p>
+            )}
+          </div>
+          <Link href="/upgrade" className="btn-ghost !py-2 text-sm">ניהול המנוי</Link>
+        </div>
+      )}
+
       {!paid && (
         <div className="card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex-1">

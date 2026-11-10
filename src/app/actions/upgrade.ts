@@ -5,8 +5,8 @@ import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 
 /**
- * v1: payment provider (Stripe / Grow) is not connected yet.
- * We record the user's intent to upgrade — we do NOT mark the plan as paid.
+ * Used only while Paddle checkout is not configured.
+ * Records intent to upgrade and does not mark the plan as paid.
  */
 export async function requestUpgrade(formData: FormData) {
   const user = await requireUser();

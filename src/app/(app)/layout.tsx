@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { logout } from "@/app/actions/auth";
 import { Logo } from "@/components/Logo";
+import { SiteFooter } from "@/components/SiteFooter";
 import { requireUser } from "@/lib/auth";
+import { blocksNewCheckout } from "@/lib/paddle";
 import { isPaid } from "@/lib/plans";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -15,7 +17,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <nav className="hidden items-center gap-5 text-sm text-neutral-600 sm:flex">
               <Link href="/dashboard" className="hover:text-ink">ההצעות שלי</Link>
               <Link href="/quotes/new" className="hover:text-ink">הצעה חדשה</Link>
-              {!isPaid(user.plan) && <Link href="/upgrade" className="hover:text-ink">שדרוג</Link>}
+              <Link href="/upgrade" className="hover:text-ink">
+                {isPaid(user.plan) || blocksNewCheckout(user.subscriptionStatus) ? "המנוי שלי" : "שדרוג"}
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-3">
@@ -32,6 +36,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-8 md:py-10">{children}</main>
+      <SiteFooter />
     </div>
   );
 }
