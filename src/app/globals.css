@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-royal-50: #eef2ff;
+  --color-royal-100: #dfe6ff;
+  --color-royal-200: #c3cfff;
+  --color-royal-500: #3d5afe;
+  --color-royal-600: #2443e6;
+  --color-royal-700: #1a33c2;
+  --color-royal-900: #0f1d6e;
+  --color-ink: #0a0a0b;
+  --font-sans: var(--font-plex), system-ui, sans-serif;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-[15px] font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal-600 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+@utility btn-primary {
+  @apply btn bg-royal-600 text-white shadow-[0_1px_0_rgba(255,255,255,.2)_inset,0_8px_24px_-8px_rgba(36,67,230,.6)] hover:bg-royal-700;
+}
+@utility btn-dark {
+  @apply btn bg-ink text-white hover:bg-neutral-800;
+}
+@utility btn-ghost {
+  @apply btn border border-neutral-200 bg-white text-ink hover:border-neutral-300 hover:bg-neutral-50;
+}
+@utility input {
+  @apply w-full rounded-xl border border-neutral-200 bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-neutral-400 transition focus:border-royal-500 focus:outline-none focus:ring-4 focus:ring-royal-100;
+}
+@utility label {
+  @apply mb-1.5 block text-sm font-medium text-neutral-700;
+}
+@utility card {
+  @apply rounded-2xl border border-neutral-200 bg-white;
+}
+@utility num {
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
