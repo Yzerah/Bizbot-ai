@@ -6,6 +6,7 @@ import { submitWebsiteLead, type LeadState } from "@/app/actions/website-leads";
 import {
   BUSINESS_TYPES,
   WEBSITE_HOSTING,
+  WEBSITE_INCLUDED_HOSTING_MONTHS,
   WEBSITE_PACKAGES,
   formatShekel,
   isWebsitePackageId,
@@ -74,7 +75,7 @@ export function WebsiteLeadForm({ initialPackage }: { initialPackage?: string })
       <label className="flex items-start gap-3 text-sm text-neutral-700">
         <input type="checkbox" name="hosting" className="mt-1 h-4 w-4 accent-royal-600" />
         <span>
-          גם {WEBSITE_HOSTING.name}, <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}
+          {WEBSITE_HOSTING.name} מהחודש הרביעי, <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}. {WEBSITE_INCLUDED_HOSTING_MONTHS} החודשים הראשונים כלולים בחבילה.
         </span>
       </label>
       <div>

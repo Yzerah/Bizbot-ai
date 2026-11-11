@@ -13,7 +13,7 @@
     "db:migrate": "node scripts/prisma.mjs dev-migrate",
     "db:deploy": "node scripts/prisma.mjs migrate",
     "db:seed": "node prisma/seed.mjs",
-    "test": "node --experimental-strip-types --test src/lib/paddle.test.ts src/lib/website-lead.test.ts"
+    "test": "node --experimental-strip-types --test src/lib/paddle.test.ts src/lib/website-lead.test.ts src/lib/website-packages.test.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
