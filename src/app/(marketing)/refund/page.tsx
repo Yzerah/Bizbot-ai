@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { PLANS } from "@/lib/plans";
 import { PADDLE_MOR_EN, SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
+import { WEBSITE_HOSTING, WEBSITE_INCLUDED_HOSTING_MONTHS, formatShekel } from "@/lib/website-packages";
 
 export const metadata: Metadata = { title: "מדיניות החזרים" };
 
@@ -71,7 +72,10 @@ export default function RefundPage() {
         <p className="mt-2">
           {SELLER_NAME} מפעיל את {SELLER_BRAND}. תהליך ההזמנה של מנוי ההצעות מתבצע באמצעות המשווקת המקוונת Paddle.com,
           שהיא Merchant of Record של הזמנות המנוי ומטפלת בהחזרים שלהן. בניית אתר אינה הזמנה ב-Paddle, וחלון 14 הימים
-          כאן לא חל עליה אוטומטית. תנאי ההזמנה של האתר נקבעים לפני תחילת העבודה.
+          כאן לא חל עליה אוטומטית. תנאי ההזמנה של האתר נקבעים לפני תחילת העבודה. כל חבילה כוללת{" "}
+          {WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי {WEBSITE_HOSTING.name}. מהחודש הרביעי האחסון הוא{" "}
+          <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}, אם ממשיכים לאחסן
+          אצלנו. כל עוד האחסון פעיל, מחולל הצעות המחיר PRO כלול בחינם. המחירים המלאים כתובים ב<Link href="/terms" className="text-royal-600 hover:underline">תנאי השימוש</Link>.
         </p>
         <p lang="en" dir="ltr" className="mt-2 text-left text-sm text-neutral-600">
           {PADDLE_MOR_EN}

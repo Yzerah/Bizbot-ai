@@ -58,7 +58,7 @@ export default async function AdminLeadsPage() {
                     </div>
                   )}
                   <div>{businessTypeLabel(lead.businessType)} · {websitePackageName(lead.packageId)}</div>
-                  <div className="text-neutral-500">{lead.hosting ? "עם אחסון חודשי" : "בלי אחסון חודשי"}</div>
+                  <div className="text-neutral-500">{lead.hosting ? "אחסון גם מהחודש הרביעי" : "אחסון רק ב-3 החודשים הכלולים"}</div>
                   {lead.message && <p className="whitespace-pre-wrap text-neutral-700">{lead.message}</p>}
                   <div className="num text-xs text-neutral-400">{formatWhen(lead.createdAt)}</div>
                 </li>
@@ -91,7 +91,7 @@ export default async function AdminLeadsPage() {
                       </td>
                       <td className="px-4 py-3">{businessTypeLabel(lead.businessType)}</td>
                       <td className="px-4 py-3">{websitePackageName(lead.packageId)}</td>
-                      <td className="px-4 py-3">{lead.hosting ? "כן" : "לא"}</td>
+                      <td className="px-4 py-3">{lead.hosting ? "מהחודש הרביעי" : "רק 3 החודשים"}</td>
                       <td className="max-w-xs whitespace-pre-wrap px-4 py-3 text-neutral-600">{lead.message}</td>
                     </tr>
                   ))}

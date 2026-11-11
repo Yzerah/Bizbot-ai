@@ -14,18 +14,20 @@ import { SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 import { SITE_URL } from "@/lib/site";
 import {
   WEBSITE_EXAMPLES,
+  WEBSITE_HOSTED_PRO_BENEFIT,
   WEBSITE_HOSTING,
+  WEBSITE_INCLUDED_HOSTING_MONTHS,
   WEBSITE_PACKAGES,
-  WEBSITE_PRO_BONUS_MONTHS,
   WEBSITE_STEPS,
   formatShekel,
+  websitePackageBenefits,
 } from "@/lib/website-packages";
 
 const pro = PLANS.find((plan) => plan.id === "PRO")!;
 const business = PLANS.find((plan) => plan.id === "BUSINESS")!;
 const landing = WEBSITE_PACKAGES[0];
 
-const description = `BizBot בונה אתר או דף נחיתה לעסק קטן בישראל תוך 48 שעות, וגם מפיק הצעות מחיר בעברית כ-PDF. אתרים מ-${formatShekel(landing.price)}. PRO ב-${pro.price} ₪ לחודש, BUSINESS ב-${business.price} ₪ לחודש.`;
+const description = `לא בונים לבד במערכת. BizBot מכין אתר או דף נחיתה לעסק קטן בישראל תוך 48 שעות, אחרי תוכן ואישור, וגם מפיק הצעות מחיר בעברית כ-PDF. אתרים מ-${formatShekel(landing.price)}, עם ${WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי אחסון. PRO ב-${pro.price} ₪ לחודש, BUSINESS ב-${business.price} ₪ לחודש.`;
 
 export const metadata: Metadata = {
   title: { absolute: "BizBot — אתר מקצועי לעסק שלך תוך 48 שעות" },
@@ -55,7 +57,7 @@ const faq = [
   },
   {
     q: "מה כלול במחיר האתר?",
-    a: `דף נחיתה ${formatShekel(landing.price)}, אתר עסקי ${formatShekel(WEBSITE_PACKAGES[1].price)}, או אתר + קידום ${formatShekel(WEBSITE_PACKAGES[2].price)}. אחסון ועדכונים הוא תוספת של ${formatShekel(WEBSITE_HOSTING.price)} לחודש. לא מצוין כאן אם המחיר כולל מע״מ.`,
+    a: `דף נחיתה ${formatShekel(landing.price)}, אתר עסקי ${formatShekel(WEBSITE_PACKAGES[1].price)}, או אתר + קידום ${formatShekel(WEBSITE_PACKAGES[2].price)}. כל חבילה כוללת ${WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי ${WEBSITE_HOSTING.name}. מהחודש הרביעי זה ${formatShekel(WEBSITE_HOSTING.price)} לחודש. לא מצוין כאן אם המחיר כולל מע״מ.`,
   },
   {
     q: "האם 48 השעות הן התחייבות להחזר?",
@@ -63,7 +65,7 @@ const faq = [
   },
   {
     q: "כמה עולה כלי ההצעות?",
-    a: `3 מסמכים בחינם. אחר כך PRO ב-${pro.price} ₪ לחודש, או BUSINESS ב-${business.price} ₪ לחודש. כל מי שמזמין אתר מקבל PRO ל-${WEBSITE_PRO_BONUS_MONTHS} חודשים.`,
+    a: `3 מסמכים בחינם. אחר כך PRO ב-${pro.price} ₪ לחודש, או BUSINESS ב-${business.price} ₪ לחודש. באתר שמאוחסן אצלנו: ${WEBSITE_HOSTED_PRO_BENEFIT}, כל עוד האחסון פעיל.`,
   },
   {
     q: "האם ההצעה היא חשבונית מס?",
@@ -87,11 +89,11 @@ export default async function Home() {
           <div className="max-w-3xl">
             <p className="text-sm font-medium text-royal-700">לעסקים קטנים בישראל</p>
             <h1 className="mt-4 text-4xl font-bold leading-[1.12] tracking-tight sm:text-5xl md:text-6xl">
-              אתר מקצועי לעסק שלך
-              <span className="mt-2 block text-royal-600">תוך 48 שעות.</span>
+              לא בונים לבד במערכת
+              <span className="mt-2 block text-royal-600">מקבלים אתר מוכן תוך 48 שעות.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600">
-              דף נחיתה או אתר קטן: מותאם לנייד, עם וואטסאפ, טופס לידים, חיבור דומיין, <bdi>SEO</bdi> בסיסי ומפת <bdi>Google Maps</bdi> כשיש כתובת.
+              בלי להרכיב את האתר לבד בבונה אתרים. דף נחיתה או אתר קטן: מותאם לנייד, עם וואטסאפ, טופס לידים, חיבור דומיין, <bdi>SEO</bdi> בסיסי ומפת <bdi>Google Maps</bdi> כשיש כתובת. 48 השעות נספרות אחרי שיש תוכן בסיסי ואישור לחבילה.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/websites#lead" className="btn-primary !px-7 !py-3.5 text-base">
@@ -105,7 +107,9 @@ export default async function Home() {
             <p className="mt-4 text-sm text-neutral-600">
               מ-<span className="num">{formatShekel(landing.price)}</span>
               {" · "}
-              PRO ל-{WEBSITE_PRO_BONUS_MONTHS} חודשים עם כל אתר
+              {WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי אחסון כלולים
+              {" · "}
+              אחר כך <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}
             </p>
           </div>
         </div>
@@ -143,7 +147,7 @@ export default async function Home() {
                 <span className={`text-sm ${pkg.highlighted ? "text-neutral-400" : "text-neutral-600"}`}>{pkg.unit}</span>
               </div>
               <ul className="mt-6 flex-1 space-y-2 text-sm">
-                {pkg.points.map((point) => (
+                {[...pkg.points, ...websitePackageBenefits()].map((point) => (
                   <li key={point} className={pkg.highlighted ? "text-neutral-200" : "text-neutral-700"}>{point}</li>
                 ))}
               </ul>

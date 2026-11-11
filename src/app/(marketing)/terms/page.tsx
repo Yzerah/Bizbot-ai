@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { PLANS } from "@/lib/plans";
-import { WEBSITE_HOSTING, WEBSITE_PACKAGES, WEBSITE_PRO_BONUS_MONTHS, formatShekel } from "@/lib/website-packages";
+import {
+  WEBSITE_HOSTED_PRO_BENEFIT,
+  WEBSITE_HOSTING,
+  WEBSITE_INCLUDED_HOSTING_MONTHS,
+  WEBSITE_PACKAGES,
+  formatShekel,
+} from "@/lib/website-packages";
 import { PADDLE_MOR_EN, SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 
 export const metadata: Metadata = { title: "תנאי שימוש" };
@@ -93,8 +99,11 @@ export default function TermsPage() {
           </li>
         </ul>
         <p className="mt-3">
-          כל לקוח שסוגר בניית אתר מקבל את מסלול PRO של כלי ההצעות בחינם ל-{WEBSITE_PRO_BONUS_MONTHS} חודשים. מסירה תוך
-          48 שעות נספרת מרגע שיש תוכן בסיסי ואישור לחבילה. פירוט בעמוד האתרים.
+          כל חבילה כוללת {WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי {WEBSITE_HOSTING.name}. מהחודש הרביעי,{" "}
+          {WEBSITE_HOSTING.name} הוא <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit},
+          אם ממשיכים לאחסן את האתר אצלנו. {WEBSITE_HOSTED_PRO_BENEFIT} כל עוד האחסון פעיל, כולל שלושת החודשים
+          הראשונים. כשהאחסון אצלנו נגמר, ההטבה נגמרת. מסירה תוך 48 שעות נספרת מרגע שיש תוכן בסיסי ואישור לחבילה. פירוט
+          בעמוד האתרים.
         </p>
       </section>
 

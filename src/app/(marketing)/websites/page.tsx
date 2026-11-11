@@ -7,18 +7,20 @@ import { WhatsAppLink } from "@/components/WhatsAppLink";
 import {
   WEBSITE_AUDIENCES,
   WEBSITE_EXAMPLES,
+  WEBSITE_HOSTED_PRO_BENEFIT,
   WEBSITE_HOSTING,
+  WEBSITE_INCLUDED_HOSTING_MONTHS,
   WEBSITE_INCLUDES,
   WEBSITE_PACKAGES,
-  WEBSITE_PRO_BONUS_MONTHS,
   WEBSITE_STEPS,
   formatShekel,
   isWebsitePackageId,
   websiteOffersJsonLd,
+  websitePackageBenefits,
 } from "@/lib/website-packages";
 
 const landing = WEBSITE_PACKAGES[0];
-const description = `בניית דף נחיתה או אתר לעסק קטן בישראל, תוך 48 שעות. עיצוב לנייד, וואטסאפ, טופס לידים, דומיין, SEO בסיסי ומפת Google Maps כשיש כתובת. מתחילים ב-${formatShekel(landing.price)}. כל לקוח אתר מקבל BizBot PRO ל-${WEBSITE_PRO_BONUS_MONTHS} חודשים.`;
+const description = `לא בונים לבד במערכת. מקבלים אתר מוכן תוך 48 שעות, אחרי תוכן בסיסי ואישור. דף נחיתה או אתר לעסק קטן, מ-${formatShekel(landing.price)}. ${WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי אחסון כלולים, ואחר כך ${formatShekel(WEBSITE_HOSTING.price)} לחודש.`;
 
 export const metadata: Metadata = {
   title: "אתר לעסק תוך 48 שעות",
@@ -55,16 +57,16 @@ const faq = [
     a: "חיבור דומיין קיים כלול. אם אין דומיין, הרכישה עצמה משולמת לרשם הדומיינים.",
   },
   {
-    q: "מה מקבלים עם BizBot PRO?",
-    a: `כל מי שמזמין אתר מקבל את כלי ההצעות BizBot PRO בחינם ל-${WEBSITE_PRO_BONUS_MONTHS} חודשים.`,
+    q: "מתי מתחיל תשלום האחסון?",
+    a: `${WEBSITE_INCLUDED_HOSTING_MONTHS} החודשים הראשונים של ${WEBSITE_HOSTING.name} כלולים בכל חבילה. מהחודש הרביעי זה ${formatShekel(WEBSITE_HOSTING.price)} ${WEBSITE_HOSTING.unit}. אפשר לוותר על האחסון אחרי שלושת החודשים, ואתר ששולם נמסר גם כך.`,
+  },
+  {
+    q: "מה מקבלים עם מחולל ההצעות?",
+    a: `${WEBSITE_HOSTED_PRO_BENEFIT} כל עוד האתר מאוחסן אצלנו, כולל ${WEBSITE_INCLUDED_HOSTING_MONTHS} החודשים הראשונים. PRO הוא כלי ההצעות, בלי הגבלה על מספר המסמכים. כשהאחסון אצלנו נגמר, ההטבה נגמרת.`,
   },
   {
     q: "איך משלמים על האתר?",
     a: "אחרי שיוצרים קשר וסוגרים את ההיקף. בניית האתר אינה מנוי Paddle של כלי ההצעות.",
-  },
-  {
-    q: "אפשר בלי האחסון החודשי?",
-    a: `כן. ${WEBSITE_HOSTING.name} ב-${formatShekel(WEBSITE_HOSTING.price)} ${WEBSITE_HOSTING.unit} הוא תוספת. אתר ששולם נמסר גם בלעדיו.`,
   },
 ];
 
@@ -90,12 +92,11 @@ export default async function WebsitesPage({
               לעסקים קטנים בישראל
             </div>
             <h1 className="mt-5 text-4xl font-bold leading-[1.15] tracking-tight sm:text-5xl md:text-[3.25rem]">
-              אתר לעסק
-              <br />
-              <span className="text-royal-600">תוך 48 שעות.</span>
+              לא בונים לבד במערכת
+              <span className="mt-2 block text-royal-600">מקבלים אתר מוכן תוך 48 שעות.</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-neutral-600">
-              דף נחיתה או אתר קטן, מותאם לנייד, עם כפתור וואטסאפ, טופס לידים, חיבור דומיין, <bdi>SEO</bdi> בסיסי ומפת <bdi>Google Maps</bdi> כשיש כתובת.
+              בלי להרכיב את האתר לבד בבונה אתרים. דף נחיתה או אתר קטן, מותאם לנייד, עם כפתור וואטסאפ, טופס לידים, חיבור דומיין, <bdi>SEO</bdi> בסיסי ומפת <bdi>Google Maps</bdi> כשיש כתובת. 48 השעות נספרות אחרי שיש תוכן בסיסי ואישור לחבילה.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="#lead" className="btn-primary !px-7 !py-3.5 text-base">
@@ -109,7 +110,9 @@ export default async function WebsitesPage({
             <p className="mt-4 text-sm text-neutral-500">
               מתחילים ב-<span className="num">{formatShekel(landing.price)}</span>
               {" · "}
-              BizBot PRO ל-{WEBSITE_PRO_BONUS_MONTHS} חודשים עם כל אתר
+              {WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי אחסון כלולים
+              {" · "}
+              אחר כך <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}
             </p>
           </div>
           <SitePreview />
@@ -196,7 +199,7 @@ export default async function WebsitesPage({
                   <span className={`text-sm ${pkg.highlighted ? "text-neutral-400" : "text-neutral-500"}`}>{pkg.unit}</span>
                 </div>
                 <ul className="mt-6 flex-1 space-y-2 text-sm">
-                  {pkg.points.map((point) => (
+                  {[...pkg.points, ...websitePackageBenefits()].map((point) => (
                     <li key={point} className={pkg.highlighted ? "text-neutral-200" : "text-neutral-700"}>{point}</li>
                   ))}
                 </ul>
@@ -219,7 +222,7 @@ export default async function WebsitesPage({
             </div>
           </div>
           <p className="mt-5 rounded-2xl bg-royal-50 px-5 py-4 text-sm leading-relaxed text-royal-900">
-            כל לקוח שבונה אתר מקבל את BizBot PRO בחינם ל-{WEBSITE_PRO_BONUS_MONTHS} חודשים. PRO הוא כלי ההצעות, בלי הגבלה על מספר המסמכים.
+            {WEBSITE_HOSTED_PRO_BENEFIT} כל עוד האתר מאוחסן אצלנו, כולל {WEBSITE_INCLUDED_HOSTING_MONTHS} החודשים הראשונים. PRO הוא כלי ההצעות, בלי הגבלה על מספר המסמכים. כשהאחסון אצלנו נגמר, ההטבה נגמרת.
           </p>
         </div>
       </section>
