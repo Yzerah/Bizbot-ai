@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
   experimental: {
     serverActions: { bodySizeLimit: "2mb" },
   },
+  async redirects() {
+    return [
+      {
+        source: "/websites/examples/clinic",
+        destination: "/websites/examples/accounting",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
