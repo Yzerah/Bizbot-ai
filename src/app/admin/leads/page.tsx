@@ -52,6 +52,11 @@ export default async function AdminLeadsPage() {
                 <li key={lead.id} className="card space-y-1 p-4 text-sm">
                   <div className="font-semibold">{lead.name}</div>
                   <div dir="ltr" className="text-right">{lead.phone}</div>
+                  {lead.email && (
+                    <div dir="ltr" className="text-right">
+                      <a href={`mailto:${lead.email}`} className="hover:underline">{lead.email}</a>
+                    </div>
+                  )}
                   <div>{businessTypeLabel(lead.businessType)} · {websitePackageName(lead.packageId)}</div>
                   <div className="text-neutral-500">{lead.hosting ? "עם אחסון חודשי" : "בלי אחסון חודשי"}</div>
                   {lead.message && <p className="whitespace-pre-wrap text-neutral-700">{lead.message}</p>}
@@ -66,6 +71,7 @@ export default async function AdminLeadsPage() {
                     <th className="px-4 py-3 font-medium">מתי</th>
                     <th className="px-4 py-3 font-medium">שם</th>
                     <th className="px-4 py-3 font-medium">טלפון</th>
+                    <th className="px-4 py-3 font-medium">אימייל</th>
                     <th className="px-4 py-3 font-medium">עסק</th>
                     <th className="px-4 py-3 font-medium">חבילה</th>
                     <th className="px-4 py-3 font-medium">אחסון</th>
@@ -78,6 +84,11 @@ export default async function AdminLeadsPage() {
                       <td className="num whitespace-nowrap px-4 py-3 text-neutral-500">{formatWhen(lead.createdAt)}</td>
                       <td className="px-4 py-3 font-medium">{lead.name}</td>
                       <td dir="ltr" className="num px-4 py-3 text-right">{lead.phone}</td>
+                      <td dir="ltr" className="px-4 py-3 text-right">
+                        {lead.email ? (
+                          <a href={`mailto:${lead.email}`} className="hover:underline">{lead.email}</a>
+                        ) : null}
+                      </td>
                       <td className="px-4 py-3">{businessTypeLabel(lead.businessType)}</td>
                       <td className="px-4 py-3">{websitePackageName(lead.packageId)}</td>
                       <td className="px-4 py-3">{lead.hosting ? "כן" : "לא"}</td>

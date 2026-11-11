@@ -41,6 +41,19 @@ export function WebsiteLeadForm({ initialPackage }: { initialPackage?: string })
         <input id="lead-phone" name="phone" type="tel" required inputMode="tel" autoComplete="tel" dir="ltr" className="input text-right" />
       </div>
       <div>
+        <label htmlFor="lead-email" className="label">אימייל (נחזור אליכם גם במייל)</label>
+        <input
+          id="lead-email"
+          name="email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          dir="ltr"
+          maxLength={254}
+          className="input text-right"
+        />
+      </div>
+      <div>
         <label htmlFor="lead-business" className="label">סוג העסק</label>
         <select id="lead-business" name="businessType" required className="input" defaultValue="professional">
           {BUSINESS_TYPES.map((type) => (
@@ -77,7 +90,7 @@ export function WebsiteLeadForm({ initialPackage }: { initialPackage?: string })
         {pending ? "שולחים..." : "שליחת פנייה"}
       </button>
       <p className="text-xs leading-relaxed text-neutral-500">
-        השם והטלפון נשמרים אצלנו כדי לחזור אליכם בעניין האתר.{" "}
+        השם, הטלפון, ואימייל אם מילאתם, נשמרים אצלנו כדי לחזור אליכם בעניין האתר.{" "}
         <Link href="/privacy" className="underline">מדיניות הפרטיות</Link>
       </p>
     </form>

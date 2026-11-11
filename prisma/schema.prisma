@@ -110,6 +110,7 @@ model WebsiteLead {
   id           String   @id @default(cuid())
   name         String
   phone        String
+  email        String? // optional reply address from the lead form
   businessType String
   packageId    String
   hosting      Boolean  @default(false)
