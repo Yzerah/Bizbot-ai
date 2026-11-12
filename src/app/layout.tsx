@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { PLANS } from "@/lib/plans";
+import { googleVerification } from "@/lib/seo";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const pro = PLANS.find((plan) => plan.id === "PRO");
@@ -17,17 +19,18 @@ const plex = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://bizbot-ai.co.il"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "BizBot — אתר לעסק תוך 48 שעות, והצעות מחיר לעצמאים",
     template: "%s | BizBot",
   },
   description: `BizBot בונה אתר או דף נחיתה לעסק קטן בישראל תוך 48 שעות, וגם מפיק הצעות מחיר בעברית כ-PDF. 3 הצעות ראשונות בחינם, ואחר כך PRO ב-${pro?.price ?? 29} ₪ לחודש.`,
   openGraph: {
-    siteName: "BizBot",
+    siteName: SITE_NAME,
     locale: "he_IL",
     type: "website",
   },
+  ...(googleVerification ? { verification: googleVerification } : {}),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

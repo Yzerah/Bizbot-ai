@@ -68,7 +68,8 @@ npm run build && npm run start
 | `DATABASE_URL` | כן | מקומית: `file:../dev.db`. בפרודקשן: מחרוזת חיבור ל-Postgres (ב-Neon: ה-URL עם `-pooler`) |
 | `DIRECT_URL` | לא | חיבור ישיר (ללא pooler) למיגרציות. ברירת מחדל: `DATABASE_URL_UNPOOLED` → `POSTGRES_URL_NON_POOLING` → `DATABASE_URL` |
 | `AUTH_SECRET` | כן | סוד לחתימת טוקני הסשן (לפחות 16 תווים). `openssl rand -base64 32` |
-| `NEXT_PUBLIC_APP_URL` | כן בפרודקשן | `https://bizbot-ai.co.il` (משמש ל-metadataBase; ברירת המחדל בקוד זהה) |
+| `NEXT_PUBLIC_APP_URL` | כן בפרודקשן | `https://bizbot-ai.co.il`. כתובות קנוניות, מפת אתר, robots ו-JSON-LD נלקחות מ-`https://bizbot-ai.co.il` ב-`src/lib/site.ts`, גם אם כאן יש כתובת של תצוגה מקדימה |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | לא | תוכן תג האימות של Google Search Console (הערך של `content`, בלי התג עצמו). אימות בקובץ כבר נמצא ב-`/google30a65c06550bbcc7.html` |
 | `NEXT_PUBLIC_PADDLE_ENV` | לא | `sandbox` או `production`. בלי כל משתני Paddle הציבוריים, כפתורי השדרוג נשארים «בקרוב» |
 | `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN` | לא | טוקן צד-לקוח של Paddle (`test_...` / `live_...`). מיועד להיות פומבי |
 | `NEXT_PUBLIC_PADDLE_PRICE_PRO` | לא | מזהה מחיר חודשי `pri_...` למסלול PRO, ‏29 ₪ |
@@ -91,8 +92,9 @@ SQLite לא מתאים ל-Vercel (מערכת הקבצים זמנית), ולכן 
 משתני סביבה ב-Vercel → Settings → Environment Variables (Production, ובמידת הצורך Preview):
 1. `DATABASE_URL` — Postgres pooled (אינטגרציית Neon מגדירה אותו אוטומטית, יחד עם `DATABASE_URL_UNPOOLED`).
 2. `AUTH_SECRET` — `openssl rand -base64 32` (חובה; בלעדיו ההתחברות לא תעבוד).
-3. `NEXT_PUBLIC_APP_URL=https://bizbot-ai.co.il`.
-4. כשמוכנים לסליקה, גם את משתני Paddle מהטבלה למעלה (Production ו-Preview). אחרי שמירה צריך פריסה מחדש. ב-Paddle → Notifications יוצרים יעד כתובת:
+3. `NEXT_PUBLIC_APP_URL=https://bizbot-ai.co.il`. כתובות קנוניות נשארות על הדומיין הזה גם בפריסה אחרת.
+4. אופציונלי: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` עם ערך תג האימות של Search Console. אימות בקובץ כבר מוגש מ-`/google30a65c06550bbcc7.html`.
+5. כשמוכנים לסליקה, גם את משתני Paddle מהטבלה למעלה (Production ו-Preview). אחרי שמירה צריך פריסה מחדש. ב-Paddle → Notifications יוצרים יעד כתובת:
 
    `https://bizbot-ai.co.il/api/paddle/webhook`
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { faqJsonLd } from "@/lib/seo";
+import { landings } from "@/content/seo/landings";
 import { WebsiteLeadForm } from "@/components/WebsiteLeadForm";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import {
@@ -77,11 +78,10 @@ export default async function WebsitesPage({
 }) {
   const { package: packageId } = await searchParams;
   const selected = isWebsitePackageId(packageId) ? packageId : "business";
-  const origin = (process.env.NEXT_PUBLIC_APP_URL || "https://bizbot-ai.co.il").replace(/\/$/, "");
 
   return (
     <>
-      <JsonLd data={websiteOffersJsonLd(origin)} />
+      <JsonLd data={websiteOffersJsonLd("/websites")} />
       <JsonLd data={faqJsonLd(faq)} />
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_80%_0%,#dfe6ff_0%,transparent_70%)]" />
@@ -225,6 +225,23 @@ export default async function WebsitesPage({
             {WEBSITE_HOSTED_PRO_BENEFIT} כל עוד האתר מאוחסן אצלנו, כולל {WEBSITE_INCLUDED_HOSTING_MONTHS} החודשים הראשונים. PRO הוא כלי ההצעות, בלי הגבלה על מספר המסמכים. כשהאחסון אצלנו נגמר, ההטבה נגמרת.
           </p>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-16">
+        <h2 className="text-3xl font-bold tracking-tight">לפי מה שמחפשים</h2>
+        <p className="mt-3 max-w-2xl text-neutral-600">
+          אותן חבילות, עם הסבר שמתאים לשאלה שמביאה אתכם לכאן.
+        </p>
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+          {landings.map((page) => (
+            <li key={page.path}>
+              <Link href={page.path} className="card block h-full p-5 transition hover:border-royal-200">
+                <h3 className="font-semibold">{page.navLabel}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{page.card}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="mx-auto max-w-3xl px-5 py-16">

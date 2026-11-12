@@ -5,8 +5,8 @@ import { postPlainText, postWordCount } from "./text";
 
 const BLOG_LINK = /\]\(\/blog\/([^)]+)\)/g;
 
-test("blog has five unique Hebrew articles in the requested length", () => {
-  assert.equal(posts.length, 5);
+test("blog has eight unique Hebrew articles in the requested length", () => {
+  assert.equal(posts.length, 8);
   const slugs = new Set(posts.map((post) => post.slug));
   assert.equal(slugs.size, posts.length);
 

@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalNav } from "@/components/LegalNav";
+import { publicMetadata } from "@/lib/seo";
 import { SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 
-export const metadata: Metadata = { title: "יצירת קשר" };
+export const metadata: Metadata = publicMetadata({
+  title: "יצירת קשר",
+  description: "יצירת קשר עם BizBot: אימייל של יניב זרח לשאלות על הצעות מחיר, בניית אתר, מנוי או פרטיות.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

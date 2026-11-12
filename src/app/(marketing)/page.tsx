@@ -9,6 +9,7 @@ import { readingMinutes, postWordCount } from "@/content/blog/text";
 import { getCurrentUser } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
 import { PLANS } from "@/lib/plans";
+import { landings } from "@/content/seo/landings";
 import { faqJsonLd, organizationJsonLd } from "@/lib/seo";
 import { SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 import { SITE_URL } from "@/lib/site";
@@ -20,6 +21,7 @@ import {
   WEBSITE_PACKAGES,
   WEBSITE_STEPS,
   formatShekel,
+  websiteOffersJsonLd,
   websitePackageBenefits,
 } from "@/lib/website-packages";
 
@@ -81,6 +83,7 @@ export default async function Home() {
   return (
     <>
       <JsonLd data={organizationJsonLd(description)} />
+      <JsonLd data={websiteOffersJsonLd("/")} />
       <JsonLd data={faqJsonLd(faq)} />
 
       <section className="relative overflow-hidden">
@@ -164,6 +167,22 @@ export default async function Home() {
           <strong className="text-ink">{WEBSITE_HOSTING.name}:</strong>{" "}
           <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}. {WEBSITE_HOSTING.summary}
         </p>
+      </section>
+
+      <section className="border-t border-neutral-100">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+          <h2 className="text-3xl font-bold tracking-tight">לפי מה שמחפשים</h2>
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+            {landings.map((page) => (
+              <li key={page.path}>
+                <Link href={page.path} className="card block h-full p-5 transition hover:border-royal-200">
+                  <h3 className="font-semibold">{page.navLabel}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">{page.card}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section id="examples" className="scroll-mt-20 border-y border-neutral-100 bg-neutral-50/70">
