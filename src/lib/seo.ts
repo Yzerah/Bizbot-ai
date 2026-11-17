@@ -10,7 +10,7 @@ export function absoluteUrl(path: string) {
 
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
 
-/** Meta-tag verification. Omitted until the env var is set. The HTML file method does not need it. */
+/** Meta-tag verification. Omitted until the env var is set. */
 export const googleVerification: Metadata["verification"] | undefined = googleSiteVerification
   ? { google: googleSiteVerification }
   : undefined;
