@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
         destination: "/websites/examples/accounting",
         permanent: true,
       },
+      // public/google30a65c06550bbcc7.html is Search Console file verification.
+      // Do not redirect or rewrite that path.
     ];
   },
 };

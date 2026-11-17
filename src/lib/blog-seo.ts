@@ -6,9 +6,9 @@ export function blogPostUrl(slug: string) {
   return `${SITE_URL}/blog/${slug}`;
 }
 
-const BLOG_TITLE = "בלוג לעצמאים: הצעות מחיר, תמחור ותשלום";
+const BLOG_TITLE = "מדריכים לעסק קטן: אתר, פניות והצעות מחיר";
 const BLOG_DESCRIPTION =
-  "מדריכים מעשיים בעברית לעצמאים: איך לכתוב הצעת מחיר, לתמחר פרויקט, לקבוע מקדמה, ומה לכלול בהסכם שירות. מידע כללי, לא ייעוץ.";
+  "מדריכים בעברית לעסקים קטנים: מה לכלול באתר, מתי מספיק דף נחיתה, איך לקבל פניות, ואיך לכתוב הצעת מחיר. מידע כללי, לא ייעוץ.";
 
 export function blogIndexMetadata(): Metadata {
   const url = `${SITE_URL}/blog`;

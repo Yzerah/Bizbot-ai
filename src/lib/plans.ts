@@ -1,3 +1,5 @@
+import { SITE_URL } from "@/lib/site";
+
 export const FREE_QUOTE_LIMIT = 3;
 
 export type PlanId = "FREE" | "PRO" | "BUSINESS";
@@ -55,7 +57,7 @@ export function isPaid(plan: string) {
   return plan === "PRO" || plan === "BUSINESS";
 }
 
-export function quoteOffersJsonLd(origin: string) {
+export function quoteOffersJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -69,7 +71,7 @@ export function quoteOffersJsonLd(origin: string) {
         description: plan.tagline,
         price: String(plan.price),
         priceCurrency: "ILS",
-        url: `${origin}/pricing`,
+        url: `${SITE_URL}/pricing`,
         ...(plan.price > 0
           ? {
               priceSpecification: {

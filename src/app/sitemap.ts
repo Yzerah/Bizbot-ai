@@ -1,11 +1,17 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/content/blog/posts";
+import { landings } from "@/content/seo/landings";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/websites`, changeFrequency: "monthly", priority: 0.9 },
+    ...landings.map((page) => ({
+      url: `${SITE_URL}${page.path}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
     { url: `${SITE_URL}/pricing`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/blog`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.4 },

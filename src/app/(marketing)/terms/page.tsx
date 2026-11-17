@@ -9,9 +9,14 @@ import {
   WEBSITE_PACKAGES,
   formatShekel,
 } from "@/lib/website-packages";
+import { publicMetadata } from "@/lib/seo";
 import { PADDLE_MOR_EN, SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 
-export const metadata: Metadata = { title: "תנאי שימוש" };
+export const metadata: Metadata = publicMetadata({
+  title: "תנאי שימוש",
+  description: "תנאי השימוש של BizBot: מי מפעיל את השירות, מה כולל מנוי ההצעות, ומה נפרד בבניית אתר.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

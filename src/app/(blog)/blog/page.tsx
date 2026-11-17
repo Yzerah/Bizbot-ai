@@ -18,9 +18,9 @@ export default function BlogIndexPage() {
       <JsonLd data={blogIndexJsonLd(posts)} />
       <div className="max-w-2xl">
         <p className="text-sm font-medium text-royal-600">בלוג BizBot</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight">מדריכים לעצמאים שמוציאים הצעות מחיר</h1>
+        <h1 className="mt-3 text-4xl font-bold tracking-tight">מדריכים לעסק קטן: אתר, פניות והצעות מחיר</h1>
         <p className="mt-4 text-lg leading-relaxed text-neutral-600">
-          איך לנסח הצעה, לתמחר פרויקט, לקבוע מקדמה, ומה כדאי לחשוב עליו לפני שכותבים הסכם. הכל בעברית, בלי מחירון מומצא.
+          מה לשים באתר, מתי מספיק עמוד אחד, איך פנייה מגיעה מהעמוד, ואיך לנסח הצעת מחיר אחרי השיחה. הכל בעברית, בלי מחירון מומצא ובלי הבטחות על דירוג.
         </p>
       </div>
       <div className="mt-6 max-w-3xl">

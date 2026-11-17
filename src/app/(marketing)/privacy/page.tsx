@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
+import { publicMetadata } from "@/lib/seo";
 import { SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 
-export const metadata: Metadata = { title: "מדיניות פרטיות" };
+export const metadata: Metadata = publicMetadata({
+  title: "מדיניות פרטיות",
+  description: "מדיניות הפרטיות של BizBot: איזה מידע נשמר בחשבון, בהצעות מחיר ובפנייה לבניית אתר, ולמי פונים.",
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

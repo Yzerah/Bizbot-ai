@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { PLANS } from "@/lib/plans";
+import { publicMetadata } from "@/lib/seo";
 import { PADDLE_MOR_EN, SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 import { WEBSITE_HOSTING, WEBSITE_INCLUDED_HOSTING_MONTHS, formatShekel } from "@/lib/website-packages";
 
-export const metadata: Metadata = { title: "מדיניות החזרים" };
+export const metadata: Metadata = publicMetadata({
+  title: "מדיניות החזרים",
+  description:
+    "מדיניות ההחזרים של BizBot: 14 יום על חיוב מנוי הצעות מחיר דרך Paddle. בניית אתר אינה הזמנה ב-Paddle.",
+  path: "/refund",
+});
 
 const pro = PLANS.find((plan) => plan.id === "PRO")!;
 const business = PLANS.find((plan) => plan.id === "BUSINESS")!;
