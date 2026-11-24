@@ -1,9 +1,9 @@
 export const MAIN_NAV = [
   { href: "/", label: "בית" },
-  { href: "/websites", label: "אתרים לעסקים" },
-  { href: "/#quotes", label: "הצעות מחיר" },
+  { href: "/websites", label: "המערכת" },
+  { href: "/pricing", label: "מחיר" },
   { href: "/blog", label: "בלוג" },
-  { href: "/pricing", label: "מחירים" },
+  { href: "/#quotes", label: "הצעות מחיר" },
   { href: "/contact", label: "צור קשר" },
 ] as const;
 

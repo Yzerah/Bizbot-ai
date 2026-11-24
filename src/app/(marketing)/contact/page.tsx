@@ -6,7 +6,7 @@ import { SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 
 export const metadata: Metadata = publicMetadata({
   title: "יצירת קשר",
-  description: "יצירת קשר עם BizBot: אימייל של יניב זרח לשאלות על הצעות מחיר, בניית אתר, מנוי או פרטיות.",
+  description: "יצירת קשר עם BizBot: אימייל של יניב זרח לשאלות על מערכת הלידים לקבלני שיפוצים, הצעות מחיר, מנוי או פרטיות.",
   path: "/contact",
 });
 
@@ -29,9 +29,9 @@ export default function ContactPage() {
       <ul className="mt-3 list-disc space-y-1.5 pr-5">
         <li>שימוש ב-BizBot, הצעות מחיר וחשבון</li>
         <li>
-          בניית אתר לעסק. אפשר גם להשאיר פרטים ב<Link href="/websites#lead" className="text-royal-600 hover:underline">עמוד האתרים</Link>
+          מערכת לידים לקבלני שיפוצים. אפשר גם להשאיר פרטים ב<Link href="/websites#lead" className="text-royal-600 hover:underline">עמוד המערכת</Link>
         </li>
-        <li>מנוי, ביטול וחשבונית. חיוב והחזר כספי מעובדים על ידי Paddle.com</li>
+        <li>מנוי של מחולל ההצעות, ביטול וחשבונית. חיוב והחזר של המנוי מעובדים על ידי Paddle.com</li>
         <li>בקשת עיון, תיקון או מחיקה של מידע אישי</li>
       </ul>
       <p className="mt-4">

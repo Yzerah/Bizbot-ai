@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { PLANS } from "@/lib/plans";
 import { googleVerification } from "@/lib/seo";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { leadsPriceSummary } from "@/lib/website-packages";
 import "./globals.css";
-
-const pro = PLANS.find((plan) => plan.id === "PRO");
 
 const plex = localFont({
   variable: "--font-plex",
@@ -21,10 +19,10 @@ const plex = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "BizBot — אתר לעסק תוך 48 שעות, והצעות מחיר לעצמאים",
+    default: "BizBot — לידים מגוגל לקבלני שיפוצים",
     template: "%s | BizBot",
   },
-  description: `BizBot בונה אתר או דף נחיתה לעסק קטן בישראל תוך 48 שעות, וגם מפיק הצעות מחיר בעברית כ-PDF. 3 הצעות ראשונות בחינם, ואחר כך PRO ב-${pro?.price ?? 29} ₪ לחודש.`,
+  description: `מערכת לידים מגוגל לקבלני שיפוצים: פרופיל Google, דף נחיתה, איסוף ביקורות ומחולל הצעות מחיר. ${leadsPriceSummary()}`,
   openGraph: {
     siteName: SITE_NAME,
     locale: "he_IL",

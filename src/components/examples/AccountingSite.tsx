@@ -119,7 +119,7 @@ export function AccountingSite() {
         <h2 className="text-3xl font-bold">קביעת שיחה</h2>
         <p className="mt-2 text-sm text-[#5e6872]">באתר אמיתי הכפתור נפתח לוואטסאפ של המשרד. כאן אין מספר.</p>
         <a href="#contact" className="mt-4 inline-flex rounded-xl bg-[#16a34a] px-4 py-2.5 text-sm font-semibold text-white">
-          וואטסאפ
+          וואטסאפ להמחשה
         </a>
         <div className="mt-6 rounded-3xl bg-white p-6 shadow-sm">
           <DemoInquiry buttonClass="w-full rounded-xl bg-[#1e3a5f] px-4 py-3 font-semibold text-white" />
@@ -129,7 +129,7 @@ export function AccountingSite() {
       <footer className="border-t border-[#e6dfd2] px-5 py-8 text-center text-sm text-[#5e6872]">
         משרד נועם הוא עסק בדיוני.{" "}
         <Link href="/websites" className="underline">
-          בניית אתר כזה ב-BizBot
+          למערכת הלידים לקבלני שיפוצים
         </Link>
       </footer>
     </div>

@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { clientIpHash } from "@/lib/client-ip";
 import { SELLER_EMAIL } from "@/lib/seller";
 import { BUSINESS_TYPES, isWebsitePackageId } from "@/lib/website-packages";
-import { isPlausiblePhone, isRateLimited, LEAD_LIMITS, normalizePhone, parseLeadEmail } from "@/lib/website-lead";
+import { isPlausiblePhone, isRateLimited, LEAD_LIMITS, normalizePhone, parseLeadEmail, parseLeadTrade } from "@/lib/website-lead";
 
 export type LeadState = { ok?: boolean; error?: string } | undefined;
 
@@ -18,14 +18,17 @@ export async function submitWebsiteLead(_: LeadState, formData: FormData): Promi
   const phone = normalizePhone(String(formData.get("phone") ?? ""));
   const parsedEmail = parseLeadEmail(String(formData.get("email") ?? ""));
   const businessType = String(formData.get("businessType") ?? "");
+  const parsedTrade = parseLeadTrade(String(formData.get("trade") ?? ""));
   const packageId = String(formData.get("packageId") ?? "");
-  const hosting = formData.get("hosting") === "on";
+  // The monthly plan is part of the offer. Older rows may still have hosting = false.
+  const hosting = true;
   const message = String(formData.get("message") ?? "").trim();
 
   if (!name || name.length > LEAD_LIMITS.name) return { error: "צריך שם, עד 80 תווים." };
   if (!isPlausiblePhone(phone)) return { error: "מספר טלפון ישראלי לא תקין." };
   if (!parsedEmail.ok) return { error: "כתובת האימייל לא תקינה." };
-  if (!BUSINESS_TYPES.some((type) => type.id === businessType)) return { error: "בחרו סוג עסק." };
+  if (!parsedTrade.ok) return { error: "ההתמחות ארוכה מדי. עד 80 תווים." };
+  if (!BUSINESS_TYPES.some((type) => type.id === businessType)) return { error: "בחרו תחום." };
   if (!isWebsitePackageId(packageId)) return { error: "בחרו חבילה." };
   if (message.length > LEAD_LIMITS.message) return { error: "ההודעה ארוכה מדי." };
 
@@ -46,6 +49,7 @@ export async function submitWebsiteLead(_: LeadState, formData: FormData): Promi
         phone,
         email: parsedEmail.email,
         businessType,
+        trade: parsedTrade.trade,
         packageId,
         hosting,
         message: message || null,

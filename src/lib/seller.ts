@@ -7,4 +7,4 @@ export const SELLER_SITE = "https://bizbot-ai.co.il";
 export const PADDLE_MOR_EN =
   "Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.";
 
-export const POLICIES_UPDATED = "10 בנובמבר 2026";
+export const POLICIES_UPDATED = "24 בנובמבר 2026";

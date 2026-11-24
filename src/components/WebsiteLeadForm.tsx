@@ -3,25 +3,18 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { submitWebsiteLead, type LeadState } from "@/app/actions/website-leads";
-import {
-  BUSINESS_TYPES,
-  WEBSITE_HOSTING,
-  WEBSITE_INCLUDED_HOSTING_MONTHS,
-  WEBSITE_PACKAGES,
-  formatShekel,
-  isWebsitePackageId,
-} from "@/lib/website-packages";
+import { LEADS_OFFER, TRADES, formatShekel, isWebsitePackageId } from "@/lib/website-packages";
 
 export function WebsiteLeadForm({ initialPackage }: { initialPackage?: string }) {
   const [state, action, pending] = useActionState<LeadState, FormData>(submitWebsiteLead, undefined);
-  const selected = isWebsitePackageId(initialPackage) ? initialPackage : "business";
+  const packageId = isWebsitePackageId(initialPackage) ? initialPackage : LEADS_OFFER.id;
 
   if (state?.ok) {
     return (
       <div role="status" className="card p-8">
         <h3 className="text-2xl font-bold tracking-tight">הפנייה נשמרה</h3>
         <p className="mt-3 leading-relaxed text-neutral-600">
-          תודה. נחזור אליך לטלפון שמילאת כדי לתאם את האתר.
+          תודה. נחזור לטלפון שמילאת. שליחת הטופס לא מחייבת. דמי ההקמה משולמים רק אחרי שתאשרו את מה שנבנה.
         </p>
       </div>
     );
@@ -42,7 +35,7 @@ export function WebsiteLeadForm({ initialPackage }: { initialPackage?: string })
         <input id="lead-phone" name="phone" type="tel" required inputMode="tel" autoComplete="tel" dir="ltr" className="input text-right" />
       </div>
       <div>
-        <label htmlFor="lead-email" className="label">אימייל (נחזור אליכם גם במייל)</label>
+        <label htmlFor="lead-email" className="label">אימייל <span className="font-normal text-neutral-400">(רשות)</span></label>
         <input
           id="lead-email"
           name="email"
@@ -55,32 +48,35 @@ export function WebsiteLeadForm({ initialPackage }: { initialPackage?: string })
         />
       </div>
       <div>
-        <label htmlFor="lead-business" className="label">סוג העסק</label>
-        <select id="lead-business" name="businessType" required className="input" defaultValue="professional">
-          {BUSINESS_TYPES.map((type) => (
+        <label htmlFor="lead-business" className="label">תחום</label>
+        <select id="lead-business" name="businessType" required className="input" defaultValue="renovation">
+          {TRADES.map((type) => (
             <option key={type.id} value={type.id}>{type.label}</option>
           ))}
         </select>
       </div>
       <div>
-        <label htmlFor="lead-package" className="label">חבילה</label>
-        <select id="lead-package" name="packageId" required className="input" defaultValue={selected}>
-          {WEBSITE_PACKAGES.map((pkg) => (
-            <option key={pkg.id} value={pkg.id}>
-              {pkg.name} · {formatShekel(pkg.price)}
-            </option>
-          ))}
-        </select>
+        <label htmlFor="lead-trade" className="label">התמחות <span className="font-normal text-neutral-400">(רשות)</span></label>
+        <input
+          id="lead-trade"
+          name="trade"
+          maxLength={80}
+          className="input"
+          placeholder="למשל: שיפוץ דירות, חדרי רחצה"
+        />
       </div>
-      <label className="flex items-start gap-3 text-sm text-neutral-700">
-        <input type="checkbox" name="hosting" className="mt-1 h-4 w-4 accent-royal-600" />
-        <span>
-          {WEBSITE_HOSTING.name} מהחודש הרביעי, <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}. {WEBSITE_INCLUDED_HOSTING_MONTHS} החודשים הראשונים כלולים בחבילה.
-        </span>
-      </label>
+      <input type="hidden" name="packageId" value={packageId} />
+      <p className="rounded-xl bg-neutral-50 px-4 py-3 text-sm leading-relaxed text-neutral-700">
+        <span className="font-medium text-ink">{LEADS_OFFER.name}.</span>{" "}
+        <span className="num">{formatShekel(LEADS_OFFER.setupPrice)}</span> הקמה אחרי אישור, ו-
+        <span className="num">{formatShekel(LEADS_OFFER.monthlyPrice)}</span> לחודש.
+        {" "}לחמשת הלקוחות הראשונים, אם ההצעה עדיין פתוחה:{" "}
+        <span className="num">{formatShekel(LEADS_OFFER.launchSetupPrice)}</span> ו-
+        <span className="num">{formatShekel(LEADS_OFFER.launchMonthlyPrice)}</span>.
+      </p>
       <div>
         <label htmlFor="lead-message" className="label">הודעה <span className="font-normal text-neutral-400">(רשות)</span></label>
-        <textarea id="lead-message" name="message" rows={4} maxLength={2000} className="input" placeholder="מה העסק עושה, ומה חשוב שיופיע באתר" />
+        <textarea id="lead-message" name="message" rows={4} maxLength={2000} className="input" placeholder="אזור העבודה, ומה חשוב שיופיע בדף" />
       </div>
       {state?.error && (
         <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
@@ -91,7 +87,7 @@ export function WebsiteLeadForm({ initialPackage }: { initialPackage?: string })
         {pending ? "שולחים..." : "שליחת פנייה"}
       </button>
       <p className="text-xs leading-relaxed text-neutral-500">
-        השם, הטלפון, ואימייל אם מילאתם, נשמרים אצלנו כדי לחזור אליכם בעניין האתר.{" "}
+        השם, הטלפון, התחום, וההתמחות או האימייל אם מילאתם, נשמרים אצלנו כדי לחזור אליכם.{" "}
         <Link href="/privacy" className="underline">מדיניות הפרטיות</Link>
       </p>
     </form>

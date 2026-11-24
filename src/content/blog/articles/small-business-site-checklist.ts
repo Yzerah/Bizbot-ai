@@ -1,15 +1,6 @@
 import type { BlogPost } from "../types";
 import { PLANS } from "@/lib/plans";
-import {
-  WEBSITE_HOSTED_PRO_BENEFIT,
-  WEBSITE_HOSTING,
-  WEBSITE_INCLUDED_HOSTING_MONTHS,
-  WEBSITE_PACKAGES,
-  formatShekel,
-} from "@/lib/website-packages";
-
-const landing = WEBSITE_PACKAGES[0];
-const business = WEBSITE_PACKAGES[1];
+import { LEADS_OFFER, formatShekel } from "@/lib/website-packages";
 const pro = PLANS.find((plan) => plan.id === "PRO")!;
 
 const post: BlogPost = {
@@ -144,11 +135,11 @@ const post: BlogPost = {
     },
     {
       type: "p",
-      text: `אפשר להרכיב עמוד לבד במערכת, אם יש לכם ערב פנוי וסבלנות לטפס בין תבניות. אפשר גם למסור את זה. ב-BizBot בונים את האתר בשבילכם: דף נחיתה בעמוד אחד ב-${formatShekel(landing.price)}, או אתר עד חמישה עמודים ב-${formatShekel(business.price)}, תשלום אחד. ${WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי אחסון כלולים, ומהחודש הרביעי ${formatShekel(WEBSITE_HOSTING.price)} ${WEBSITE_HOSTING.unit} אם ממשיכים לאחסן אצלנו. 48 השעות נספרות אחרי שיש תוכן בסיסי ואישור לחבילה, לא אחרי שליחת טופס.`,
+      text: `אפשר להרכיב עמוד לבד במערכת, אם יש לכם ערב פנוי וסבלנות לטפס בין תבניות. אפשר גם למסור את זה. ב-BizBot, לקבלני שיפוצים, המוצר הוא מערכת לידים מגוגל: פרופיל Google, דף נחיתה, איסוף ביקורות מלקוחות עבר, ומחולל הצעות מחיר. הקמה ב-${formatShekel(LEADS_OFFER.setupPrice)}, ואחר כך ${formatShekel(LEADS_OFFER.monthlyPrice)} לחודש. לחמשת הלקוחות הראשונים: ${formatShekel(LEADS_OFFER.launchSetupPrice)} הקמה ו-${formatShekel(LEADS_OFFER.launchMonthlyPrice)} לחודש. דמי ההקמה משולמים אחרי אישור, לא בשליחת הטופס.`,
     },
     {
       type: "p",
-      text: `${WEBSITE_HOSTED_PRO_BENEFIT} כל עוד האתר מאוחסן אצלנו. זה כלי להפקת הצעת מחיר ב-PDF, לא חלק מהעיצוב של האתר, וההצעה אינה חשבונית מס. בלי האחסון, PRO הוא ${pro.price} ₪ לחודש. הפירוט יושב ב[בניית אתר לעסק קטן](/websites/small-business).`,
+      text: `מחולל הצעות המחיר כלול במערכת. זה כלי להפקת הצעת מחיר ב-PDF, לא חלק מהעיצוב של הדף, וההצעה אינה חשבונית מס. בלי המערכת, PRO הוא ${pro.price} ₪ לחודש. הפירוט יושב ב[מערכת הלידים לקבלן שיפוצים](/websites/small-business).`,
     },
     {
       type: "h2",

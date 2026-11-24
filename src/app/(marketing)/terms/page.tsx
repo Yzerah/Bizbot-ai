@@ -2,19 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { PLANS } from "@/lib/plans";
-import {
-  WEBSITE_HOSTED_PRO_BENEFIT,
-  WEBSITE_HOSTING,
-  WEBSITE_INCLUDED_HOSTING_MONTHS,
-  WEBSITE_PACKAGES,
-  formatShekel,
-} from "@/lib/website-packages";
+import { LEADS_OFFER, formatShekel } from "@/lib/website-packages";
 import { publicMetadata } from "@/lib/seo";
 import { PADDLE_MOR_EN, SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
 
 export const metadata: Metadata = publicMetadata({
   title: "תנאי שימוש",
-  description: "תנאי השימוש של BizBot: מי מפעיל את השירות, מה כולל מנוי ההצעות, ומה נפרד בבניית אתר.",
+  description: "תנאי השימוש של BizBot: מערכת לידים לקבלני שיפוצים, ומנוי נפרד למחולל הצעות המחיר.",
   path: "/terms",
 });
 
@@ -82,33 +76,28 @@ export default function TermsPage() {
       </section>
 
       <section>
-        <h2>בניית אתרים</h2>
+        <h2>מערכת לידים לקבלני שיפוצים</h2>
         <p className="mt-2">
-          בנוסף לכלי ההצעות, BizBot בונה דף נחיתה או אתר לעסק קטן. זה שירות נפרד ממנוי ההצעות, וההזמנה אינה עוברת דרך
-          Paddle. התשלום נקבע לפני תחילת העבודה. המחירים בשקלים:
+          בנוסף למסלולי המחולל, BizBot מציעה לקבלני שיפוצים מערכת לידים: פרופיל Google לעסק, דף נחיתה, איסוף ביקורות
+          מלקוחות עבר, ומחולל הצעות המחיר. זה שירות נפרד ממנוי המחולל. המחירים בשקלים, כפי שמופיעים בעמוד המחיר:
         </p>
         <ul className="mt-3">
-          {WEBSITE_PACKAGES.map((pkg) => (
-            <li key={pkg.id}>
-              <strong className="text-ink">{pkg.name}</strong>
-              {": "}
-              <span className="num">{formatShekel(pkg.price)}</span>
-              {", "}
-              {pkg.unit}. {pkg.summary}
-            </li>
-          ))}
           <li>
-            <strong className="text-ink">{WEBSITE_HOSTING.name}</strong>
-            {": "}
-            <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}. {WEBSITE_HOSTING.summary}
+            הקמה: <span className="num">{formatShekel(LEADS_OFFER.setupPrice)}</span>. משולמת אחרי שהלקוח מאשר את מה שנבנה.
+            שליחת טופס הפנייה אינה חיוב.
+          </li>
+          <li>
+            תפעול: <span className="num">{formatShekel(LEADS_OFFER.monthlyPrice)}</span> לחודש, מרגע שהמערכת באוויר.
+          </li>
+          <li>
+            הצעת השקה לחמשת הלקוחות הראשונים: <span className="num">{formatShekel(LEADS_OFFER.launchSetupPrice)}</span> הקמה
+            ו-<span className="num">{formatShekel(LEADS_OFFER.launchMonthlyPrice)}</span> לחודש. אם חמשת המקומות נתפסו, חל המחיר הרגיל.
           </li>
         </ul>
         <p className="mt-3">
-          כל חבילה כוללת {WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי {WEBSITE_HOSTING.name}. מהחודש הרביעי,{" "}
-          {WEBSITE_HOSTING.name} הוא <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit},
-          אם ממשיכים לאחסן את האתר אצלנו. {WEBSITE_HOSTED_PRO_BENEFIT} כל עוד האחסון פעיל, כולל שלושת החודשים
-          הראשונים. כשהאחסון אצלנו נגמר, ההטבה נגמרת. מסירה תוך 48 שעות נספרת מרגע שיש תוכן בסיסי ואישור לחבילה. פירוט
-          בעמוד האתרים.
+          אם בתוך {LEADS_OFFER.guaranteeDays} יום מהיום שהמערכת עלתה לאוויר לא נכנסה אף פנייה, דמי ההקמה חוזרים. פנייה היא
+          שיחת טלפון, או שם וטלפון שהושאירו מהדף או מפרופיל הגוגל. ההחזר אינו כולל את התשלום החודשי. אין התחייבות למספר
+          שיחות, לכמות עבודות, או למקום מסוים בתוצאות החיפוש. לא מצוין כאן אם הסכומים כוללים מע״מ. פירוט בעמוד המערכת.
         </p>
       </section>
 
@@ -116,8 +105,8 @@ export default function TermsPage() {
         <h2>תשלום ו-Paddle</h2>
         <p className="mt-2">
           תהליך ההזמנה של מנוי ההצעות מתבצע באמצעות המשווקת המקוונת שלנו, Paddle.com. Paddle.com היא Merchant of Record
-          (המוכרת הרשומה) של הזמנות המנוי. Paddle מספקת את פניות שירות הלקוחות הקשורות להזמנה ומטפלת בהחזרים. בניית אתר
-          אינה הזמנה ב-Paddle.
+          (המוכרת הרשומה) של הזמנות מנוי המחולל. Paddle מספקת את פניות שירות הלקוחות הקשורות להזמנת המנוי ומטפלת בהחזרים שלה.
+          מערכת הלידים אינה הזמנה ב-Paddle.
         </p>
         <p lang="en" dir="ltr" className="mt-2 text-left text-sm text-neutral-600">
           {PADDLE_MOR_EN}

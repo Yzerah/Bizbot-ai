@@ -112,6 +112,7 @@ model WebsiteLead {
   phone        String
   email        String? // optional reply address from the lead form
   businessType String
+  trade        String? // optional specialty, free text from the lead form
   packageId    String
   hosting      Boolean  @default(false)
   message      String?

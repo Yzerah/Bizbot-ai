@@ -33,7 +33,7 @@ export default async function AdminLeadsPage() {
           <Logo />
           <div className="flex items-center gap-3 text-sm">
             <span dir="ltr" className="hidden text-neutral-500 sm:inline">{user.email}</span>
-            <Link href="/websites" className="text-neutral-700 hover:text-ink">לאתרים</Link>
+            <Link href="/websites" className="text-neutral-700 hover:text-ink">למערכת</Link>
             <form action={logout}>
               <button type="submit" className="rounded-lg px-3 py-2 font-medium text-neutral-700 hover:bg-neutral-100">
                 יציאה
@@ -43,7 +43,7 @@ export default async function AdminLeadsPage() {
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-5 py-8">
-        <h1 className="text-2xl font-bold tracking-tight">פניות לבניית אתר</h1>
+        <h1 className="text-2xl font-bold tracking-tight">פניות למערכת הלידים</h1>
         <p className="mt-2 text-sm text-neutral-600">{leads.length === 0 ? "עדיין אין פניות." : `${leads.length} פניות אחרונות.`}</p>
         {leads.length > 0 && (
           <>
@@ -57,8 +57,11 @@ export default async function AdminLeadsPage() {
                       <a href={`mailto:${lead.email}`} className="hover:underline">{lead.email}</a>
                     </div>
                   )}
-                  <div>{businessTypeLabel(lead.businessType)} · {websitePackageName(lead.packageId)}</div>
-                  <div className="text-neutral-500">{lead.hosting ? "אחסון גם מהחודש הרביעי" : "אחסון רק ב-3 החודשים הכלולים"}</div>
+                  <div>
+                    {businessTypeLabel(lead.businessType)}
+                    {lead.trade ? ` · ${lead.trade}` : ""} · {websitePackageName(lead.packageId)}
+                  </div>
+                  <div className="text-neutral-500">{lead.hosting ? "כולל מסלול חודשי" : "בלי מסלול חודשי"}</div>
                   {lead.message && <p className="whitespace-pre-wrap text-neutral-700">{lead.message}</p>}
                   <div className="num text-xs text-neutral-400">{formatWhen(lead.createdAt)}</div>
                 </li>
@@ -72,9 +75,9 @@ export default async function AdminLeadsPage() {
                     <th className="px-4 py-3 font-medium">שם</th>
                     <th className="px-4 py-3 font-medium">טלפון</th>
                     <th className="px-4 py-3 font-medium">אימייל</th>
-                    <th className="px-4 py-3 font-medium">עסק</th>
+                    <th className="px-4 py-3 font-medium">תחום</th>
                     <th className="px-4 py-3 font-medium">חבילה</th>
-                    <th className="px-4 py-3 font-medium">אחסון</th>
+                    <th className="px-4 py-3 font-medium">חודשי</th>
                     <th className="px-4 py-3 font-medium">הודעה</th>
                   </tr>
                 </thead>
@@ -89,9 +92,12 @@ export default async function AdminLeadsPage() {
                           <a href={`mailto:${lead.email}`} className="hover:underline">{lead.email}</a>
                         ) : null}
                       </td>
-                      <td className="px-4 py-3">{businessTypeLabel(lead.businessType)}</td>
+                      <td className="px-4 py-3">
+                        {businessTypeLabel(lead.businessType)}
+                        {lead.trade ? <div className="text-neutral-500">{lead.trade}</div> : null}
+                      </td>
                       <td className="px-4 py-3">{websitePackageName(lead.packageId)}</td>
-                      <td className="px-4 py-3">{lead.hosting ? "מהחודש הרביעי" : "רק 3 החודשים"}</td>
+                      <td className="px-4 py-3">{lead.hosting ? "כן" : "לא"}</td>
                       <td className="max-w-xs whitespace-pre-wrap px-4 py-3 text-neutral-600">{lead.message}</td>
                     </tr>
                   ))}
