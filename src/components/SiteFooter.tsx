@@ -12,7 +12,7 @@ export function SiteFooter() {
         <div className="space-y-3">
           <Logo />
           <p className="max-w-xs text-sm leading-relaxed text-neutral-600">
-            אתרים לעסקים קטנים בישראל, והצעות מחיר לעצמאים. מופעל על ידי {SELLER_NAME}.
+            מערכת לידים מגוגל לקבלני שיפוצים, ומחולל הצעות מחיר. מופעל על ידי {SELLER_NAME}.
           </p>
           <p className="text-sm text-neutral-600">
             <a dir="ltr" className="font-medium text-ink hover:underline" href={`mailto:${SELLER_EMAIL}`}>
@@ -27,8 +27,8 @@ export function SiteFooter() {
             </Link>
           ))}
         </nav>
-        <nav aria-label="עמודי בניית אתר" className="flex flex-col gap-2 text-sm text-neutral-700">
-          <div className="font-semibold text-ink">בניית אתר</div>
+        <nav aria-label="עמודי המערכת" className="flex flex-col gap-2 text-sm text-neutral-700">
+          <div className="font-semibold text-ink">לקבלני שיפוצים</div>
           {landings.map((page) => (
             <Link key={page.path} href={page.path} className="hover:text-ink">
               {page.navLabel}
@@ -48,7 +48,7 @@ export function SiteFooter() {
           <div className="text-sm font-semibold text-ink">מסמכים</div>
           <LegalNav className="flex flex-col gap-2 text-sm text-neutral-700" />
           <p className="max-w-sm text-xs leading-relaxed text-neutral-600">
-            מנוי ההצעות מחויב דרך Paddle.com, Merchant of Record. בניית אתר אינה הזמנה ב-Paddle.
+            מערכת הלידים לקבלני שיפוצים. דמי ההקמה אחרי אישור, וחוזרים אם אין פנייה בתוך 90 יום.
           </p>
         </div>
       </div>

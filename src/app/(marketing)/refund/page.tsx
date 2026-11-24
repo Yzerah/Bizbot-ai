@@ -4,12 +4,12 @@ import { LegalPage } from "@/components/LegalPage";
 import { PLANS } from "@/lib/plans";
 import { publicMetadata } from "@/lib/seo";
 import { PADDLE_MOR_EN, SELLER_BRAND, SELLER_EMAIL, SELLER_NAME } from "@/lib/seller";
-import { WEBSITE_HOSTING, WEBSITE_INCLUDED_HOSTING_MONTHS, formatShekel } from "@/lib/website-packages";
+import { LEADS_OFFER, formatShekel } from "@/lib/website-packages";
 
 export const metadata: Metadata = publicMetadata({
   title: "מדיניות החזרים",
   description:
-    "מדיניות ההחזרים של BizBot: 14 יום על חיוב מנוי הצעות מחיר דרך Paddle. בניית אתר אינה הזמנה ב-Paddle.",
+    "מדיניות ההחזרים של BizBot: 14 יום על מנוי מחולל ההצעות, והחזר דמי הקמה של מערכת הלידים אם אין פנייה בתוך 90 יום.",
   path: "/refund",
 });
 
@@ -20,10 +20,30 @@ export default function RefundPage() {
   return (
     <LegalPage title="מדיניות החזרים וביטול">
       <section>
-        <h2>חלון החזר של 14 יום</h2>
+        <h2>החזר דמי הקמה של מערכת הלידים</h2>
         <p className="mt-2">
-          אפשר לבקש החזר מלא על חיוב של מנוי {SELLER_BRAND} תוך 14 יום ממועד החיוב. החלון חל על החיוב הראשון וגם על כל
-          חידוש חודשי, ומספיקה בקשה בגלל שינוי דעה. אין צורך להוכיח תקלה.
+          מערכת הלידים לקבלני שיפוצים עולה <span className="num">{formatShekel(LEADS_OFFER.setupPrice)}</span> הקמה
+          ו-<span className="num">{formatShekel(LEADS_OFFER.monthlyPrice)}</span> לחודש. לחמשת הלקוחות הראשונים:{" "}
+          <span className="num">{formatShekel(LEADS_OFFER.launchSetupPrice)}</span> הקמה ו-
+          <span className="num">{formatShekel(LEADS_OFFER.launchMonthlyPrice)}</span> לחודש. דמי ההקמה משולמים אחרי אישור
+          התוצאה.
+        </p>
+        <p className="mt-2">
+          אם בתוך {LEADS_OFFER.guaranteeDays} יום מהיום שהמערכת עלתה לאוויר לא נכנסה אף פנייה, דמי ההקמה ששולמו חוזרים.
+          פנייה היא שיחת טלפון, או שם וטלפון שהושאירו מהדף או מפרופיל הגוגל. ההחזר אינו כולל תשלומים חודשיים שכבר שולמו,
+          ואינו הבטחה למספר שיחות או לעבודות. הבקשה נשלחת אל{" "}
+          <a dir="ltr" className="font-medium text-royal-600 hover:underline" href={`mailto:${SELLER_EMAIL}`}>
+            {SELLER_EMAIL}
+          </a>
+          .
+        </p>
+      </section>
+
+      <section>
+        <h2>חלון החזר של 14 יום על מנוי המחולל</h2>
+        <p className="mt-2">
+          אפשר לבקש החזר מלא על חיוב של מנוי מחולל ההצעות תוך 14 יום ממועד החיוב. החלון חל על החיוב הראשון וגם על כל
+          חידוש חודשי של המנוי, ומספיקה בקשה בגלל שינוי דעה. אין צורך להוכיח תקלה.
         </p>
         <p className="mt-2">
           ההחזר מכסה את הסכום ש-Paddle חייבה באותה עסקה, בשקלים חדשים (ILS), כולל מס ש-Paddle גבתה באותה עסקה אם היא
@@ -76,12 +96,9 @@ export default function RefundPage() {
       <section>
         <h2>מי מעבדת את ההזמנה</h2>
         <p className="mt-2">
-          {SELLER_NAME} מפעיל את {SELLER_BRAND}. תהליך ההזמנה של מנוי ההצעות מתבצע באמצעות המשווקת המקוונת Paddle.com,
-          שהיא Merchant of Record של הזמנות המנוי ומטפלת בהחזרים שלהן. בניית אתר אינה הזמנה ב-Paddle, וחלון 14 הימים
-          כאן לא חל עליה אוטומטית. תנאי ההזמנה של האתר נקבעים לפני תחילת העבודה. כל חבילה כוללת{" "}
-          {WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי {WEBSITE_HOSTING.name}. מהחודש הרביעי האחסון הוא{" "}
-          <span className="num">{formatShekel(WEBSITE_HOSTING.price)}</span> {WEBSITE_HOSTING.unit}, אם ממשיכים לאחסן
-          אצלנו. כל עוד האחסון פעיל, מחולל הצעות המחיר PRO כלול בחינם. המחירים המלאים כתובים ב<Link href="/terms" className="text-royal-600 hover:underline">תנאי השימוש</Link>.
+          {SELLER_NAME} מפעיל את {SELLER_BRAND}. תהליך ההזמנה של מנוי המחולל מתבצע באמצעות המשווקת המקוונת Paddle.com,
+          שהיא Merchant of Record של הזמנות המנוי ומטפלת בהחזרים שלהן. מערכת הלידים אינה הזמנה ב-Paddle. חלון 14 הימים
+          חל על חיוב המנוי. החזר דמי ההקמה של מערכת הלידים הוא הסעיף למעלה, והוא נפרד ממנו. המחירים המלאים כתובים ב<Link href="/terms" className="text-royal-600 hover:underline">תנאי השימוש</Link>.
         </p>
         <p lang="en" dir="ltr" className="mt-2 text-left text-sm text-neutral-600">
           {PADDLE_MOR_EN}

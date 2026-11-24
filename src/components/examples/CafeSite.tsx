@@ -80,7 +80,7 @@ export function CafeSite() {
             <h2 className="text-2xl font-bold">שאלה על מקום</h2>
             <p className="mt-2 text-sm text-[#7c4a32]">באתר אמיתי הכפתור נפתח לוואטסאפ של בית הקפה. כאן אין מספר.</p>
             <a href="#contact" className="mt-4 inline-flex rounded-xl bg-[#16a34a] px-4 py-2.5 text-sm font-semibold text-white">
-              וואטסאפ
+              וואטסאפ להמחשה
             </a>
             <div className="mt-6">
               <DemoInquiry buttonClass="w-full rounded-xl bg-[#9a3412] px-4 py-3 font-semibold text-[#fff7ed]" />
@@ -92,7 +92,7 @@ export function CafeSite() {
       <footer className="px-5 py-8 text-center text-sm text-[#7c4a32]">
         קפה תמר הוא עסק בדיוני.{" "}
         <Link href="/websites" className="underline">
-          בניית אתר כזה ב-BizBot
+          למערכת הלידים לקבלני שיפוצים
         </Link>
       </footer>
     </div>

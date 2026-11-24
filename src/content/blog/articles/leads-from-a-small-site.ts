@@ -1,12 +1,6 @@
 import type { BlogPost } from "../types";
 import { PLANS } from "@/lib/plans";
-import {
-  WEBSITE_HOSTED_PRO_BENEFIT,
-  WEBSITE_PACKAGES,
-  formatShekel,
-} from "@/lib/website-packages";
-
-const landing = WEBSITE_PACKAGES[0];
+import { LEADS_OFFER, formatShekel } from "@/lib/website-packages";
 const pro = PLANS.find((plan) => plan.id === "PRO")!;
 const businessPlan = PLANS.find((plan) => plan.id === "BUSINESS")!;
 
@@ -93,7 +87,7 @@ const post: BlogPost = {
     },
     {
       type: "p",
-      text: `האתר לא מפיק את ההצעה לבד, ואין שליחה אוטומטית מהטופס אל הלקוח. את המסמך מפיקים אתם. ב-BizBot, כל עוד האתר מאוחסן אצלנו, ${WEBSITE_HOSTED_PRO_BENEFIT}. PRO בלי ההטבה הזו הוא ${pro.price} ₪ לחודש, ו-BUSINESS הוא ${businessPlan.price} ₪ לחודש. 3 מסמכים ראשונים בחשבון בחינם. ההצעה אינה חשבונית מס. החיבור בין האתר לכלי מתואר ב[אתר עם מחולל הצעות מחיר](/websites/with-quote-generator).`,
+      text: `האתר לא מפיק את ההצעה לבד, ואין שליחה אוטומטית מהטופס אל הלקוח. את המסמך מפיקים אתם. ב-BizBot מחולל ההצעות כלול במערכת הלידים לקבלני שיפוצים. בלי המערכת, PRO הוא ${pro.price} ₪ לחודש, ו-BUSINESS הוא ${businessPlan.price} ₪ לחודש. 3 מסמכים ראשונים בחשבון בחינם. ההצעה אינה חשבונית מס. החיבור בין הפנייה לכלי מתואר ב[הצעת מחיר אחרי השיחה](/websites/with-quote-generator).`,
     },
     {
       type: "h2",
@@ -106,7 +100,7 @@ const post: BlogPost = {
     },
     {
       type: "p",
-      text: `גם לא כדאי לחכות עם הפרסום של הקישור עד שיהיה «עוד תוכן». עמוד אחד עם השירות, האזור והטלפון כבר אפשר לשלוח. תמונות של עבודות אפשר להוסיף כשיהיו. עמוד שלא באוויר לא מקבל פנייה בכלל. אם חסר לכם העמוד עצמו, לוח הזמנים אצלנו הוא 48 שעות אחרי תוכן בסיסי ואישור, מדף נחיתה ב-${formatShekel(landing.price)}. הפירוט: [אתר תדמית תוך 48 שעות](/websites/ready-in-48-hours).`,
+      text: `גם לא כדאי לחכות עם הפרסום של הקישור עד שיהיה «עוד תוכן». עמוד אחד עם השירות, האזור והטלפון כבר אפשר לשלוח. תמונות של עבודות אפשר להוסיף כשיהיו. עמוד שלא באוויר לא מקבל פנייה בכלל. אם חסר לכם העמוד עצמו, אצלנו הוא חלק ממערכת לידים לקבלן שיפוצים: הקמה ב-${formatShekel(LEADS_OFFER.setupPrice)} אחרי אישור, ואחר כך ${formatShekel(LEADS_OFFER.monthlyPrice)} לחודש. הפירוט: [מערכת הלידים](/websites/small-business).`,
     },
     {
       type: "h3",
@@ -145,7 +139,7 @@ const post: BlogPost = {
     },
     {
       type: "p",
-      text: "פנייה היא שיחה שהתחילה. האתר יכול לפתוח אותה אם הוא ברור ואם מישהו שלח אליו אדם, או אם האדם מצא אותו. הוא לא מחליף מענה, והוא לא מחליף מחיר כתוב. מי שרוצה את העמוד בלי להרכיב אותו לבד יכול להתחיל מ[בניית אתר לעסק קטן](/websites/small-business).",
+      text: "פנייה היא שיחה שהתחילה. העמוד יכול לפתוח אותה אם הוא ברור ואם מישהו שלח אליו אדם, או אם האדם מצא אותו. הוא לא מחליף מענה, והוא לא מחליף מחיר כתוב. קבלן שיפוצים שרוצה את הפרופיל, את הדף ואת בקשת הביקורות במקום אחד יכול להתחיל מ[מערכת הלידים](/websites/small-business).",
     },
   ],
 };

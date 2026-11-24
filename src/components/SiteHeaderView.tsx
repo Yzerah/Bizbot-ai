@@ -20,8 +20,8 @@ export function SiteHeaderView({ loggedIn }: { loggedIn: boolean }) {
               <Link href="/login" className="hidden px-3 py-2 text-sm font-medium text-neutral-700 hover:text-ink lg:block">
                 התחברות
               </Link>
-              <Link href="/signup" className="btn-primary !px-3 !py-2 text-sm sm:!px-4">
-                התחילו בחינם
+              <Link href="/websites#lead" className="btn-primary !px-3 !py-2 text-sm sm:!px-4">
+                השארת פרטים
               </Link>
             </>
           )}

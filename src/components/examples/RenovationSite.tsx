@@ -101,7 +101,7 @@ export function RenovationSite() {
           <h2 className="text-2xl font-bold">קביעת שיחה</h2>
           <p className="mt-2 text-sm text-stone-600">באתר אמיתי הכפתור נפתח לוואטסאפ של הקבלן. כאן אין מספר.</p>
           <a href="#contact" className="mt-4 inline-flex rounded-xl bg-[#16a34a] px-4 py-2.5 text-sm font-semibold text-white">
-            וואטסאפ
+            וואטסאפ להמחשה
           </a>
           <div className="mt-6">
             <DemoInquiry buttonClass="w-full rounded-xl bg-[#1c1917] px-4 py-3 font-semibold text-white" />
@@ -112,7 +112,7 @@ export function RenovationSite() {
       <footer className="border-t border-[#e7e5e4] px-5 py-8 text-center text-sm text-stone-500">
         דקל שיפוצים הוא עסק בדיוני.{" "}
         <Link href="/websites" className="underline">
-          בניית אתר כזה ב-BizBot
+          למערכת הלידים לקבלני שיפוצים
         </Link>
       </footer>
     </div>

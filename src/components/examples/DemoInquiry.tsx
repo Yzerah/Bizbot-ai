@@ -11,7 +11,7 @@ export function DemoInquiry({ buttonClass }: { buttonClass: string }) {
       <div role="status" className="rounded-2xl border border-current/15 bg-white/80 p-5 text-sm leading-relaxed">
         <p className="font-semibold">זהו אתר לדוגמה. לא נשלחה פנייה.</p>
         <p className="mt-2">
-          העסק בדיוני, ואין כאן מספר טלפון. לאתר לעסק שלך{" "}
+          העסק בדיוני, ואין כאן מספר טלפון. למערכת הלידים לקבלני שיפוצים{" "}
           <Link href="/websites#lead" className="font-semibold underline">
             משאירים פרטים ב-BizBot
           </Link>

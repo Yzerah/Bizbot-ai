@@ -6,13 +6,9 @@ import { WhatsAppLink } from "@/components/WhatsAppLink";
 import type { SeoLanding } from "@/content/seo/landings";
 import { landings } from "@/content/seo/landings";
 import { breadcrumbJsonLd, faqJsonLd, organizationJsonLd } from "@/lib/seo";
-import {
-  WEBSITE_HOSTING,
-  WEBSITE_PACKAGES,
-  formatShekel,
-  websiteOffersJsonLd,
-  websitePackageBenefits,
-} from "@/lib/website-packages";
+import { LeadsPrice } from "@/components/LeadsPrice";
+import { PhoneLink } from "@/components/PhoneLink";
+import { websiteOffersJsonLd } from "@/lib/website-packages";
 
 export function SeoLandingView({ page }: { page: SeoLanding }) {
   const others = landings.filter((item) => item.path !== page.path);
@@ -25,7 +21,7 @@ export function SeoLandingView({ page }: { page: SeoLanding }) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "דף הבית", path: "/" },
-          { name: "אתרים לעסקים", path: "/websites" },
+          { name: "המערכת", path: "/websites" },
           { name: page.navLabel, path: page.path },
         ])}
       />
@@ -40,7 +36,7 @@ export function SeoLandingView({ page }: { page: SeoLanding }) {
               </li>
               <li aria-hidden="true">/</li>
               <li>
-                <Link href="/websites" className="hover:text-ink">אתרים לעסקים</Link>
+                <Link href="/websites" className="hover:text-ink">המערכת</Link>
               </li>
             </ol>
           </nav>
@@ -54,9 +50,10 @@ export function SeoLandingView({ page }: { page: SeoLanding }) {
             <Link href="#lead" className="btn-primary !px-7 !py-3.5 text-base">
               השארת פרטים
             </Link>
-            <Link href="/websites" className="btn-ghost !py-3.5">
-              לכל החבילות
+            <Link href="/pricing" className="btn-ghost !py-3.5">
+              למחיר
             </Link>
+            <PhoneLink className="btn-ghost !py-3.5" />
             <WhatsAppLink text={`היי, אשמח לשמוע על ${page.navLabel}`} className="btn-ghost !py-3.5" />
           </div>
         </div>
@@ -90,30 +87,12 @@ export function SeoLandingView({ page }: { page: SeoLanding }) {
         <div className="mx-auto max-w-3xl px-5 py-14">
           <h2 className="text-2xl font-bold tracking-tight">המחיר</h2>
           <p className="mt-3 leading-relaxed text-neutral-600">{page.priceIntro}</p>
-          <ul className="mt-6 space-y-4">
-            {WEBSITE_PACKAGES.map((pkg) => (
-              <li key={pkg.id} className="card p-5">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="font-semibold">{pkg.name}</h3>
-                  <p className="num text-2xl font-bold">
-                    {formatShekel(pkg.price)} <span className="text-sm font-medium text-neutral-500">{pkg.unit}</span>
-                  </p>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{pkg.summary}</p>
-                <ul className="mt-3 space-y-1 text-sm text-neutral-700">
-                  {websitePackageBenefits().map((benefit) => (
-                    <li key={benefit}>{benefit}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 text-sm leading-relaxed text-neutral-600">
-            {WEBSITE_HOSTING.name}: {WEBSITE_HOSTING.summary}
-          </p>
+          <div className="mt-6">
+            <LeadsPrice ctaHref="#lead" />
+          </div>
           <p className="mt-4 text-sm">
-            <Link href="/websites#packages" className="font-medium text-royal-700 hover:underline">
-              לפירוט המלא בעמוד האתרים
+            <Link href="/websites#price" className="font-medium text-royal-700 hover:underline">
+              לפירוט בעמוד המערכת
             </Link>
           </p>
         </div>
@@ -166,13 +145,14 @@ export function SeoLandingView({ page }: { page: SeoLanding }) {
           <div>
             <h2 className="text-3xl font-bold tracking-tight">השארת פרטים</h2>
             <p className="mt-3 leading-relaxed text-neutral-600">
-              שם, טלפון, סוג העסק והחבילה. נחזור לתיאום שיחת אפיון קצרה. אותו טופס נמצא גם{" "}
+              שם, טלפון ותחום. נחזור לשיחה קצרה. אין חיוב בשליחה. אותו טופס נמצא גם{" "}
               <Link href="/websites#lead" className="font-medium text-royal-700 hover:underline">
-                בעמוד האתרים
+                בעמוד המערכת
               </Link>
               .
             </p>
-            <div className="mt-6">
+            <div className="mt-6 flex flex-col items-start gap-3">
+              <PhoneLink />
               <WhatsAppLink label="או בוואטסאפ" text={`היי, אשמח לשמוע על ${page.navLabel}`} />
             </div>
           </div>

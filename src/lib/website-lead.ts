@@ -2,6 +2,7 @@ export const LEAD_LIMITS = {
   name: 80,
   message: 2000,
   email: 254,
+  trade: 80,
   perIpPerHour: 5,
   perPhonePerDay: 3,
 } as const;
@@ -23,6 +24,14 @@ export function isPlausiblePhone(digits: string) {
 
 export function isRateLimited(input: { ipCountLastHour: number; phoneCountLastDay: number }) {
   return input.ipCountLastHour >= LEAD_LIMITS.perIpPerHour || input.phoneCountLastDay >= LEAD_LIMITS.perPhonePerDay;
+}
+
+/** Empty is allowed. A non-empty specialty has to stay short. */
+export function parseLeadTrade(input: string): { ok: true; trade: string | null } | { ok: false } {
+  const trade = input.trim();
+  if (!trade) return { ok: true, trade: null };
+  if (trade.length > LEAD_LIMITS.trade) return { ok: false };
+  return { ok: true, trade };
 }
 
 /** Empty is allowed. A non-empty value must be a short, plausible address. */

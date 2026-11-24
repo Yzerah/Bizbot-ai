@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { PLANS } from "@/lib/plans";
-import { WEBSITE_INCLUDED_HOSTING_MONTHS, WEBSITE_PACKAGES, formatShekel } from "@/lib/website-packages";
+import { LEADS_OFFER, formatShekel } from "@/lib/website-packages";
 
 const pro = PLANS.find((plan) => plan.id === "PRO")!;
 const business = PLANS.find((plan) => plan.id === "BUSINESS")!;
-const landing = WEBSITE_PACKAGES[0];
 
 export function ArticleCta() {
   return (
@@ -23,11 +22,11 @@ export function ArticleCta() {
         </Link>
       </div>
       <p className="mt-4 text-sm leading-relaxed text-neutral-300">
-        צריך אתר לעסק, לא רק מסמך?{" "}
+        לקבלני שיפוצים:{" "}
         <Link href="/websites" className="font-medium text-white underline">
-          בניית אתר
-        </Link>{" "}
-        מ-<span className="num">{formatShekel(landing.price)}</span>, עם {WEBSITE_INCLUDED_HOSTING_MONTHS} חודשי אחסון.
+          מערכת לידים מגוגל
+        </Link>
+        , והמחולל כלול בה. <span className="num">{formatShekel(LEADS_OFFER.setupPrice)}</span> הקמה ו-<span className="num">{formatShekel(LEADS_OFFER.monthlyPrice)}</span> לחודש.
       </p>
       <p className="mt-4 text-xs text-neutral-400">המסמך שנוצר הוא הצעת מחיר, לא חשבונית מס.</p>
     </aside>

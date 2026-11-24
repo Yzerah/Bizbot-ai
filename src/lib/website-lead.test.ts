@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isPlausiblePhone, isRateLimited, normalizePhone, parseLeadEmail } from "./website-lead.ts";
+import { isPlausiblePhone, isRateLimited, normalizePhone, parseLeadEmail, parseLeadTrade } from "./website-lead.ts";
 
 test("normalizes Israeli phone numbers", () => {
   assert.equal(normalizePhone("050-123-4567"), "0501234567");
@@ -11,6 +11,13 @@ test("normalizes Israeli phone numbers", () => {
   assert.equal(isPlausiblePhone("035550101"), true);
   assert.equal(isPlausiblePhone("123"), false);
   assert.equal(isPlausiblePhone("050123"), false);
+});
+
+test("accepts an optional trade and rejects a long one", () => {
+  assert.deepEqual(parseLeadTrade(""), { ok: true, trade: null });
+  assert.deepEqual(parseLeadTrade("  שיפוץ דירות  "), { ok: true, trade: "שיפוץ דירות" });
+  assert.deepEqual(parseLeadTrade("א".repeat(80)), { ok: true, trade: "א".repeat(80) });
+  assert.deepEqual(parseLeadTrade("א".repeat(81)), { ok: false });
 });
 
 test("accepts an optional lead email", () => {
